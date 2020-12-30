@@ -25,20 +25,6 @@ void Display::receive_data_from_display()
         Serial2.flush();
     }
 }
-/*void Display::Refresh_Fans_Screen()
-{
-    if (inData == "f_m")
-    {
-        outData = "tf1.txt=\"" + String(fan1_0_10_voltage_input, 1) + String(" V") + "\"";
-        sendDataToDisplay();
-        outData = "tf2.txt=\"" + String(fan2_0_10_voltage_input, 1) + String(" V") + "\"";
-        sendDataToDisplay();
-        outData = "bt0.val=" + String(f1_on_off_state);
-        sendDataToDisplay();
-        outData = "bt1.val=" + String(f2_on_off_state);
-        sendDataToDisplay();
-    }
-}*/
 
 void Display::Refresh_Fans_Screen(String Nextion_Text_Field_f1, float f1_control_voltage, String Nextion_Text_Field_f2, float f2_control_voltage )
 {
