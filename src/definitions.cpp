@@ -1,0 +1,74 @@
+#include "definitions.h"
+#define temp_bus 19 // DS18B20 pin
+#define Pressure1 35
+#define Pressure2 34
+#define FP1 27 // free programable 1
+#define FP2 15 // free programable 2
+#define FP3 13 // free programable 3
+#define FP4 2  // free programable 4
+#define F1 26  // fan 1 0N/OFF
+#define F2 14  // fan 2 ON/OFF
+#define H1 32  // heater section 1
+#define H2 18  // heater section 2
+#define H3 25  // heater section 3
+//FAN 1
+#define fan_1_PWM_pin 4
+const int fan_1_PWM_Channel = 0;
+const int fan_1_PWM_resolution = 8;
+const int fan_1_PWM_frequency = 5000;
+float fan1_0_10_voltage_input; //input from display
+int fan1_0_10_voltage_output;
+float fan_1_Vd;
+float fan_1_Dc;
+String f1_Nextion_Text_Field = "tf1.txt=\"";
+//FAN 2
+#define fan_2_PWM_pin 33
+const int fan_2_PWM_Channel = 1;
+const int fan_2_PWM_resolution = 8;
+const int fan_2_PWM_frequency = 5000;
+float fan2_0_10_voltage_input;
+int fan2_0_10_voltage_output;
+float fan_2_Vd;
+float fan_2_Dc;
+String f2_Nextion_Text_Field = "tf2.txt=\"";
+//VALVE 1
+#define valve_1_PWM_pin 5
+const int valve_1_PWM_Channel = 2;
+const int valve_1_PWM_resolution = 8;
+const int valve_1_PWM_frequency = 5000;
+// VARIABLES FOR THE DISPLAY
+unsigned long time_in_millis = 0;
+unsigned long elapsed_time_in_millis = 0;
+unsigned long timer_read_serial = 0;
+int read_serial_interval = 15000;
+String inData;  //main variable for incoming data from the display
+String outData; //main variable for outgoing data to the display
+bool f1_on_off_state;
+bool f2_on_off_state;
+String new_settings;
+String old_settings;
+String saved_settings;
+String f1_voltage_string;
+String f2_voltage_string;
+String f1_on_off_state_string;
+String f2_on_off_state_string;
+/////Temperatures/////
+int devCount;
+float T_1 = 0.00;
+float T_2 = 0.00;
+float T_3 = 0.00;
+float T_4 = 0.00;
+float T_5 = 0.00;
+float T_6 = 0.00;
+unsigned int DS18B20_PRECISION = 11;
+String dev_address_1 = "28914D9497B03";
+String dev_address_1_read = "";
+int temp_measure_interval =2000; 
+////////TIMERS/////////////////
+unsigned long timer1 = 0; //used for temperature measurement
+unsigned long timer2 = 4000; //used for temperature measurement
+unsigned long timer3 = 6000; //used for temperature measurement
+unsigned long timer4 = 8000; //used for temperature measurement
+unsigned long timer5 = 10000; //used for temperature measurement
+unsigned long timer6 = 12000; //used for temperature measurement
+
