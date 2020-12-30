@@ -66,6 +66,10 @@ extern unsigned int DS18B20_PRECISION;
 extern String dev_address_1;
 extern String dev_address_1_read;
 extern int temp_measure_interval; 
+extern String t1_Nextion_Text_Field;
+extern String t2_Nextion_Text_Field;
+extern String t3_Nextion_Text_Field;
+extern String t4_Nextion_Text_Field;
 
 ////////TIMERS/////////////////
 extern unsigned long timer1; //used for temperature measurement
