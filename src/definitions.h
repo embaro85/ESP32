@@ -22,6 +22,7 @@ extern int fan1_0_10_voltage_output;
 extern float fan_1_Vd;
 extern float fan_1_Dc;
 extern String f1_Nextion_Text_Field;
+extern String ref_fans_screen_cmd;
 //FAN 2
 #define fan_2_PWM_pin 33
 extern const int fan_2_PWM_Channel;
@@ -63,14 +64,7 @@ extern float T_4;
 extern float T_5;
 extern float T_6;
 extern unsigned int DS18B20_PRECISION;
-extern String dev_address_1;
-extern String dev_address_1_read;
 extern int temp_measure_interval; 
-extern String t1_Nextion_Text_Field;
-extern String t2_Nextion_Text_Field;
-extern String t3_Nextion_Text_Field;
-extern String t4_Nextion_Text_Field;
-
 ////////TIMERS/////////////////
 extern unsigned long timer1; //used for temperature measurement
 extern unsigned long timer2; //used for temperature measurement
@@ -78,4 +72,18 @@ extern unsigned long timer3; //used for temperature measurement
 extern unsigned long timer4; //used for temperature measurement
 extern unsigned long timer5; //used for temperature measurement
 extern unsigned long timer6; //used for temperature measurement
-
+/////DISPLAY/////
+extern String f1_Nextion_Text_Field;
+extern String f1_plus_cmd;
+extern String f1_minus_cmd;
+extern String f2_Nextion_Text_Field;
+extern String f2_plus_cmd;
+extern String f2_minus_cmd;
+extern String ref_fans_screen_cmd;
+ 
+extern String ref_temp1_screen_cmd;
+extern String ref_temp2_screen_cmd;
+extern String t1_Nextion_Text_Field;
+extern String t2_Nextion_Text_Field;
+extern String t3_Nextion_Text_Field;
+extern String t4_Nextion_Text_Field;
