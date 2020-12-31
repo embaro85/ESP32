@@ -20,7 +20,6 @@ float fan1_0_10_voltage_input; //input from display
 int fan1_0_10_voltage_output;
 float fan_1_Vd;
 float fan_1_Dc;
-String f1_Nextion_Text_Field = "tf1.txt=\"";
 //FAN 2
 #define fan_2_PWM_pin 33
 const int fan_2_PWM_Channel = 1;
@@ -30,7 +29,7 @@ float fan2_0_10_voltage_input;
 int fan2_0_10_voltage_output;
 float fan_2_Vd;
 float fan_2_Dc;
-String f2_Nextion_Text_Field = "tf2.txt=\"";
+
 //VALVE 1
 #define valve_1_PWM_pin 5
 const int valve_1_PWM_Channel = 2;
@@ -60,10 +59,10 @@ float T_3 = 0.00;
 float T_4 = 0.00;
 float T_5 = 0.00;
 float T_6 = 0.00;
+
 unsigned int DS18B20_PRECISION = 11;
-String dev_address_1 = "28914D9497B03";
-String dev_address_1_read = "";
 int temp_measure_interval =2000; 
+
 ////////TIMERS/////////////////
 unsigned long timer1 = 0; //used for temperature measurement
 unsigned long timer2 = 4000; //used for temperature measurement
@@ -71,4 +70,19 @@ unsigned long timer3 = 6000; //used for temperature measurement
 unsigned long timer4 = 8000; //used for temperature measurement
 unsigned long timer5 = 10000; //used for temperature measurement
 unsigned long timer6 = 12000; //used for temperature measurement
+/////DISPLAY/////
+String f1_Nextion_Text_Field = "tf1.txt=\"";
+String f1_plus_cmd = "f1_pl";
+String f1_minus_cmd = "f1_mi";
+String f2_Nextion_Text_Field = "tf2.txt=\"";
+String f2_plus_cmd = "f2_pl";
+String f2_minus_cmd = "f2_mi";
+String ref_fans_screen_cmd = "f_m";
+ 
 
+String ref_temp1_screen_cmd = "t_m";
+String ref_temp2_screen_cmd = "t_m_1";
+String t1_Nextion_Text_Field = "tt1.txt=\"";
+String t2_Nextion_Text_Field = "tt2.txt=\"";
+String t3_Nextion_Text_Field = "tt3.txt=\"";
+String t4_Nextion_Text_Field = "tt4.txt=\"";

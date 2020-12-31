@@ -85,7 +85,9 @@ void loop()
     fans_control.fan2_control();
     fans_control.f2_calculate_pwm_value();
     display_control.Refresh_Fans_Screen(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f2_Nextion_Text_Field, fan2_0_10_voltage_input);
-    display_control.Refresh_Temperature_Screens();
+    display_control.Refresh_Temperature_Screen_1(t1_Nextion_Text_Field, T_1, t2_Nextion_Text_Field, T_2);
+    display_control.Refresh_Temperature_Screen_2(t3_Nextion_Text_Field, T_3, t4_Nextion_Text_Field, T_4);
+
    // temperatures_control.measure_temperatures();
 
     //display_control.Refresh_Fans_Screen();
@@ -96,4 +98,4 @@ void loop()
         
         check_time_for_execution(); //Measure the time needed to process everything once*/
 
-} // end loop
+} // end void loop
