@@ -97,11 +97,11 @@ void loop()
     inData = "0";
     display_control.receive_data_from_display();
     logic_control.check_and_save_data();
-    fans_control.fan1_control_voltage_up(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f1_plus_cmd);
-    fans_control.fan1_control_voltage_down(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f1_minus_cmd);
+    fan1_0_10_voltage_input = fans_control.fan1_control_voltage_up(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f1_plus_cmd);
+    fan1_0_10_voltage_input = fans_control.fan1_control_voltage_down(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f1_minus_cmd);
     fans_control.fan1_control_on_off();
-    fans_control.fan2_control_voltage_up(f2_Nextion_Text_Field, fan2_0_10_voltage_input, f2_plus_cmd);
-    fans_control.fan2_control_voltage_down(f2_Nextion_Text_Field, fan2_0_10_voltage_input, f2_minus_cmd);
+    fan2_0_10_voltage_input = fans_control.fan2_control_voltage_up(f2_Nextion_Text_Field, fan2_0_10_voltage_input, f2_plus_cmd);
+    fan2_0_10_voltage_input = fans_control.fan2_control_voltage_down(f2_Nextion_Text_Field, fan2_0_10_voltage_input, f2_minus_cmd);
     fans_control.fan2_control_on_off();
     display_control.Refresh_Fans_Screen(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f2_Nextion_Text_Field, fan2_0_10_voltage_input, ref_fans_screen_cmd);
     display_control.Refresh_Temperature_Screen_1(t1_Nextion_Text_Field, T_1, t2_Nextion_Text_Field, T_2, ref_temp1_screen_cmd);
