@@ -2,7 +2,7 @@
 #include "definitions.h"
 #include "Fans.h"
 
-void f1_calculate_pwm_value()
+void f1_calculate_pwm_value(float pwm)
 {
   /* Setting the desired voltage by setting the duty cycle:
  *  desired voltage(Vd) = logic high level voltage(Vc) X duty cycle(Dc)
@@ -20,53 +20,35 @@ void f1_calculate_pwm_value()
   ledcWrite(fan_1_PWM_Channel, fan1_0_10_voltage_output);
 }
 
-void Fans::fan1_control_voltage_up(String Nextion_Text_Field_f1, float f1_control_voltage, String cmd)
+float Fans::fan1_control_voltage_up(String Nextion_Text_Field_f1, float f1_control_voltage, String cmd)
 {
   if (cmd == inData)
-  
-  { 
-    Serial.println(f1_control_voltage);
+
+  {
     // incerase fan 1 voltage
     if (f1_control_voltage <= 10.0)
-    { 
-    Serial.println(f1_control_voltage);
-      f1_control_voltage = f1_control_voltage + 0.1;
-      Serial.print("the new value is: ");
+    {
       Serial.println(f1_control_voltage);
+      f1_control_voltage += 0.1;
       outData = Nextion_Text_Field_f1 + String(f1_control_voltage, 1) + String(" V") + "\""; // generate string for the display
-      Serial.print("the new link is: ");
-      Serial.println(outData);
       display_control.sendDataToDisplay();
-      f1_calculate_pwm_value();
+      f1_calculate_pwm_value(f1_control_voltage);
+      return f1_control_voltage;
     }
   }
 }
 
-/*void Fans::fan1_control_voltage_up(String Nextion_Text_Field_f1, float f1_control_voltage, String cmd)
-{
-  if (cmd == inData)
-  { // incerase fan 1 voltage
-    if (fan1_0_10_voltage_input <= 10.0)
-    {
-      fan1_0_10_voltage_input = fan1_0_10_voltage_input + 0.1;
-      outData = Nextion_Text_Field_f1 + String(f1_control_voltage, 1) + String(" V") + "\""; // generate string for the display
-
-      display_control.sendDataToDisplay();
-      f1_calculate_pwm_value();
-    }
-  }
-}*/
-
-void Fans::fan1_control_voltage_down(String Nextion_Text_Field_f1, float f1_control_voltage, String cmd)
+float Fans::fan1_control_voltage_down(String Nextion_Text_Field_f1, float f1_control_voltage, String cmd)
 {
   if (cmd == inData)
   { // decrease fan 1 voltage
     if (f1_control_voltage >= 0.1)
     {
-      f1_control_voltage = f1_control_voltage - 0.1;
-      outData = Nextion_Text_Field_f1 + String(fan1_0_10_voltage_input, 1) + String(" V") + "\""; // generate string for the display
+      f1_control_voltage -= 0.1;
+      outData = Nextion_Text_Field_f1 + String(f1_control_voltage, 1) + String(" V") + "\""; // generate string for the display
       display_control.sendDataToDisplay();
-      f1_calculate_pwm_value();
+      f1_calculate_pwm_value(f1_control_voltage);
+      return f1_control_voltage;
     }
   }
 }
@@ -88,7 +70,7 @@ void Fans::fan1_control_on_off()
   }
 }
 
-void f2_calculate_pwm_value()
+void f2_calculate_pwm_value(float pwm)
 {
 
   /* Setting the desired voltage by setting the duty cycle:
@@ -108,31 +90,33 @@ void f2_calculate_pwm_value()
   ledcWrite(fan_2_PWM_Channel, fan2_0_10_voltage_output);
 }
 
-void Fans::fan2_control_voltage_up(String Nextion_Text_Field_f2, float f2_control_voltage, String cmd)
+float Fans::fan2_control_voltage_up(String Nextion_Text_Field_f2, float f2_control_voltage, String cmd)
 {
 
   if (cmd == inData)
   { // increase fan 2 voltage
-    if (fan2_0_10_voltage_input <= 10.0)
+    if (f2_control_voltage <= 10.0)
     {
-      fan2_0_10_voltage_input = fan2_0_10_voltage_input + 0.1;
+      f2_control_voltage +=0.1;
       outData = Nextion_Text_Field_f2 + String(f2_control_voltage, 1) + String(" V") + "\"";
       display_control.sendDataToDisplay();
-      f2_calculate_pwm_value();
+      f2_calculate_pwm_value(f2_control_voltage);
+      return f2_control_voltage;
     }
   }
 }
 
-void Fans::fan2_control_voltage_down(String Nextion_Text_Field_f2, float f2_control_voltage, String cmd)
+float Fans::fan2_control_voltage_down(String Nextion_Text_Field_f2, float f2_control_voltage, String cmd)
 {
   if (cmd == inData)
   { // decrease fan 2 voltage
-    if (fan2_0_10_voltage_input >= 0.1)
+    if (f2_control_voltage >= 0.1)
     {
-      fan2_0_10_voltage_input = fan2_0_10_voltage_input - 0.1;
+      f2_control_voltage -= 0.1;
       outData = Nextion_Text_Field_f2 + String(f2_control_voltage, 1) + String(" V") + "\"";
       display_control.sendDataToDisplay();
-      f2_calculate_pwm_value();
+      f2_calculate_pwm_value(f2_control_voltage);
+      return f2_control_voltage;
     }
   }
 }

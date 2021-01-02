@@ -61,15 +61,16 @@ float T_5 = 0.00;
 float T_6 = 0.00;
 
 unsigned int DS18B20_PRECISION = 11;
-int temp_measure_interval =2000; 
+int temp_measure_interval = 5000;
+int temperature_sensor=1;
 
 ////////TIMERS/////////////////
 unsigned long timer1 = 0; //used for temperature measurement
-unsigned long timer2 = 4000; //used for temperature measurement
-unsigned long timer3 = 6000; //used for temperature measurement
-unsigned long timer4 = 8000; //used for temperature measurement
-unsigned long timer5 = 10000; //used for temperature measurement
-unsigned long timer6 = 12000; //used for temperature measurement
+unsigned long timer2 = 0; //used for temperature measurement
+unsigned long timer3 = 0; //used for temperature measurement
+unsigned long timer4 = 0; //used for temperature measurement
+unsigned long timer5 = 0; //used for temperature measurement
+unsigned long timer6 = 0; //used for temperature measurement
 /////DISPLAY/////
 String f1_Nextion_Text_Field = "tf1.txt=\"";
 String f1_plus_cmd = "f1_pl";
@@ -78,7 +79,6 @@ String f2_Nextion_Text_Field = "tf2.txt=\"";
 String f2_plus_cmd = "f2_pl";
 String f2_minus_cmd = "f2_mi";
 String ref_fans_screen_cmd = "f_m";
- 
 
 String ref_temp1_screen_cmd = "t_m";
 String ref_temp2_screen_cmd = "t_m_1";
