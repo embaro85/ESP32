@@ -1,5 +1,6 @@
 #include <definitions.h>
 #include "Display.h"
+#include "Temperatures.h"
 
 void Display::sendDataToDisplay()
 { //send data to display
@@ -39,22 +40,30 @@ void Display::Refresh_Fans_Screen(String Nextion_Text_Field_f1, float f1_control
 
 void Display::Refresh_Temperature_Screen_1(String t1_Nextion_Text_Field, float t1_temperature, String t2_Nextion_Text_Field, float t2_temperature, String ref_temp1_screen_cmd)
 {
-    if (ref_temp1_screen_cmd == inData)
+   /* if (ref_temp1_screen_cmd == inData)
     {
-        outData = t1_Nextion_Text_Field + String(t1_temperature, 2) + "\"";
-        sendDataToDisplay();
-        outData = t2_Nextion_Text_Field + String(t2_temperature, 2) + "\"";
-        sendDataToDisplay();
-    }
+        on_temp_screen_one = inData;
+       // while (on_temp_screen_one == ref_temp1_screen_cmd)
+        {
+            temperatures_control.measure_temperatures();
+          
+            outData = t1_Nextion_Text_Field + String(t1_temperature, 1) + "\"";
+            sendDataToDisplay();
+            outData = t2_Nextion_Text_Field + String(t2_temperature, 1) + "\"";
+            sendDataToDisplay();
+            
+        }
+    }*/
 }
 
 void Display::Refresh_Temperature_Screen_2(String t3_Nextion_Text_Field, float t3_temperature, String t4_Nextion_Text_Field, float t4_temperature, String ref_temp2_screen_cmd)
 {
     if (ref_temp2_screen_cmd == inData)
     {
-        outData = t3_Nextion_Text_Field + String(t3_temperature, 2) + "\"";
+        temperatures_control.measure_temperatures();
+        outData = t3_Nextion_Text_Field + String(t3_temperature, 1) + "\"";
         sendDataToDisplay();
-        outData = t4_Nextion_Text_Field + String(t4_temperature, 2) + "\"";
+        outData = t4_Nextion_Text_Field + String(t4_temperature, 1) + "\"";
         sendDataToDisplay();
     }
 }

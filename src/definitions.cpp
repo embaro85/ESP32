@@ -86,3 +86,5 @@ String t1_Nextion_Text_Field = "tt1.txt=\"";
 String t2_Nextion_Text_Field = "tt2.txt=\"";
 String t3_Nextion_Text_Field = "tt3.txt=\"";
 String t4_Nextion_Text_Field = "tt4.txt=\"";
+String on_temp_screen_one;
+
