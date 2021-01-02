@@ -72,22 +72,15 @@ void setup()
     pinMode(Pressure1, INPUT_PULLDOWN);
     pinMode(Pressure2, INPUT_PULLDOWN);
 
-    digitalWrite(FP1,LOW);
-    digitalWrite(FP2,LOW);
-    digitalWrite(FP3,LOW);
-    digitalWrite(FP4,LOW);
-    digitalWrite(F1,LOW);
-    digitalWrite(F2,LOW);
-    digitalWrite(H1,LOW);
-    digitalWrite(H2,LOW);
-    digitalWrite(H3,LOW);
-    
-
-
-
-
-
-
+    digitalWrite(FP1, LOW);
+    digitalWrite(FP2, LOW);
+    digitalWrite(FP3, LOW);
+    digitalWrite(FP4, LOW);
+    digitalWrite(F1, LOW);
+    digitalWrite(F2, LOW);
+    digitalWrite(H1, LOW);
+    digitalWrite(H2, LOW);
+    digitalWrite(H3, LOW);
 
 } // end void setup
 
@@ -106,14 +99,8 @@ void loop()
     display_control.Refresh_Fans_Screen(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f2_Nextion_Text_Field, fan2_0_10_voltage_input, ref_fans_screen_cmd);
     display_control.Refresh_Temperature_Screen_1(t1_Nextion_Text_Field, T_1, t2_Nextion_Text_Field, T_2, ref_temp1_screen_cmd);
     display_control.Refresh_Temperature_Screen_2(t3_Nextion_Text_Field, T_3, t4_Nextion_Text_Field, T_4, ref_temp2_screen_cmd);
-    //temperatures_control.measure_temperatures();
+    temperatures_control.measure_temperatures();
 
-    
-        
-       
-        
-        
-        
-        //check_time_for_execution(); //Measure the time needed to process everything once
+    //check_time_for_execution(); //Measure the time needed to process everything once
 
 } // end void loop

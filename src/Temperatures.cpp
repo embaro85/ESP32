@@ -106,48 +106,78 @@ void Temperatures::temp_sensor_begin()
 }
 void Temperatures::measure_temperatures()
 {
-    DS18B20.requestTemperatures();
     if (millis() > timer1 + temp_measure_interval)
     {
         timer1 = millis();
-        T_1 = DS18B20.getTempCByIndex(0);
-        Serial.print("Temperature Sensor 1 reading is: ");
-        Serial.print(T_1);
-        Serial.println("ºC");
-        outData = "tt1.txt=\"" + String(T_1, 2) + "\""; // generate string for the display
-        display_control.sendDataToDisplay();
+        DS18B20.requestTemperatures();
+
+        if (temperature_sensor == 1)
+        {
+            T_1 = DS18B20.getTempCByIndex(0);
+            Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_1, 1) + "°C");
+            temperature_sensor++;
+        }
+        else if (temperature_sensor == 2)
+        {
+            T_2 = DS18B20.getTempCByIndex(1);
+            Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_2, 1) + "°C");
+            temperature_sensor++;
+        }
+        else if (temperature_sensor == 3)
+        {
+            T_3 = DS18B20.getTempCByIndex(2);
+            Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_3, 1) + "°C");
+            temperature_sensor++;
+        }
+        else if (temperature_sensor == 4)
+        {
+            T_4 = DS18B20.getTempCByIndex(3);
+            Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_4, 1) + "°C");
+            temperature_sensor = 1;
+        }
+        {
+        }
+
+        //outData = "tt1.txt=\"" + String(T_1, 2) + "\""; // generate string for the display
+        //display_control.sendDataToDisplay();
     }
-    if (millis() > timer2 + temp_measure_interval)
+    /*  if (millis() > timer2 + temp_measure_interval)
     {
+        timer1 = millis();
         timer2 = millis();
         T_2 = DS18B20.getTempCByIndex(1) - 0.5;
         timer2 = millis();
         Serial.print("Temperature Sensor 2 reading is: ");
         Serial.print(T_2 - 0.5);
         Serial.println("ºC");
-        outData = "tt2.txt=\"" + String(T_2, 2) + "\""; // generate string for the display
-        display_control.sendDataToDisplay();
+        //outData = "tt2.txt=\"" + String(T_2, 2) + "\""; // generate string for the display
+       // display_control.sendDataToDisplay();
     }
     if (millis() > timer3 + temp_measure_interval)
     {
+        timer1 = millis();
+        timer2 = millis();
         timer3 = millis();
         T_3 = DS18B20.getTempCByIndex(2) + 0.375;
         Serial.print("Temperature Sensor 3 reading is: ");
         Serial.print(T_3 + 0.375);
         Serial.println("ºC");
-        outData = "tt3.txt=\"" + String(T_3, 2) + "\""; // generate string for the display
-        display_control.sendDataToDisplay();
+        //outData = "tt3.txt=\"" + String(T_3, 2) + "\""; // generate string for the display
+        //display_control.sendDataToDisplay();
     }
     if (millis() > timer4 + temp_measure_interval)
     {
+        timer1 = millis();
+        timer2 = millis();
+        timer3 = millis();
         timer4 = millis();
         T_4 = DS18B20.getTempCByIndex(3) - 0.25;
         Serial.print("Temperature Sensor 4 reading is: ");
         Serial.print(T_4 - 0.25);
         Serial.println("ºC");
-        outData = "tt4.txt=\"" + String(T_4, 2) + "\""; // generate string for the display
-        display_control.sendDataToDisplay();
-    }
+        //outData = "tt4.txt=\"" + String(T_4, 2) + "\""; // generate string for the display
+        //display_control.sendDataToDisplay();
+    }*/
     /* if (millis() > timer5 + temp_measure_interval)
     {
         timer5 = millis();
