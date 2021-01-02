@@ -100,6 +100,7 @@ void loop()
     display_control.Refresh_Temperature_Screen_1(t1_Nextion_Text_Field, T_1, t2_Nextion_Text_Field, T_2, ref_temp1_screen_cmd);
     display_control.Refresh_Temperature_Screen_2(t3_Nextion_Text_Field, T_3, t4_Nextion_Text_Field, T_4, ref_temp2_screen_cmd);
     temperatures_control.measure_temperatures();
+   
 
     //check_time_for_execution(); //Measure the time needed to process everything once
 
