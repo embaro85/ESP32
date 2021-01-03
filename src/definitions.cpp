@@ -88,3 +88,20 @@ String t3_Nextion_Text_Field = "tt3.txt=\"";
 String t4_Nextion_Text_Field = "tt4.txt=\"";
 String on_temp_screen_one;
 
+/////TEMPERATURES/////
+String h_manual_on_off = "ok_h_man";
+bool h_manual_control = false;
+String h1_manual_on = "h1_on";
+String h1_manual_off = "h1_off";
+String h2_manual_on = "h2_on";
+String h2_manual_off = "h2_off";
+String h3_manual_on = "h3_on";
+String h3_manual_off = "h3_off";
+String h1_Nextion_Text_Field = "th1.txt=\"";
+String h2_Nextion_Text_Field = "th2.txt=\"";
+String h3_Nextion_Text_Field = "th3.txt=\"";
+bool heater1_on_off_state;
+bool heater2_on_off_state;
+bool heater3_on_off_state;
+
+
