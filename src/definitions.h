@@ -88,6 +88,20 @@ extern String t2_Nextion_Text_Field;
 extern String t3_Nextion_Text_Field;
 extern String t4_Nextion_Text_Field;
 extern String on_temp_screen_one;
-
-
 extern int temperature_sensor;
+
+/////TEMPERATURES/////
+extern String h_manual_on_off;
+extern bool h_manual_control;
+extern String h1_manual_on;
+extern String h1_manual_off;
+extern String h2_manual_on;
+extern String h2_manual_off;
+extern String h3_manual_on;
+extern String h2_manual_off;
+extern String h1_Nextion_Text_Field;
+extern String h2_Nextion_Text_Field; 
+extern String h3_Nextion_Text_Field;
+extern bool heater1_on_off_state;
+extern bool heater2_on_off_state;
+extern bool heater3_on_off_state;

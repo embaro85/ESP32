@@ -22,6 +22,7 @@
 #include "Display.h"
 #include "Fans.h"
 #include "Temperatures.h"
+#include "Heaters.h"
 
 void setup()
 {
@@ -99,8 +100,12 @@ void loop()
     display_control.Refresh_Fans_Screen(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f2_Nextion_Text_Field, fan2_0_10_voltage_input, ref_fans_screen_cmd);
     display_control.Refresh_Temperature_Screen_1(t1_Nextion_Text_Field, T_1, t2_Nextion_Text_Field, T_2, ref_temp1_screen_cmd);
     display_control.Refresh_Temperature_Screen_2(t3_Nextion_Text_Field, T_3, t4_Nextion_Text_Field, T_4, ref_temp2_screen_cmd);
-    temperatures_control.measure_temperatures();
-   
+   // temperatures_control.measure_temperatures();
+    heaters_control.heaters_manual_control();
+    heaters_control.h1_manual_on_off();
+    heaters_control.h2_manual_on_off();
+    heaters_control.h3_manual_on_off();
+
 
     //check_time_for_execution(); //Measure the time needed to process everything once
 

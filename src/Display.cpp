@@ -58,14 +58,14 @@ void Display::Refresh_Temperature_Screen_1(String t1_Nextion_Text_Field, float t
 
 void Display::Refresh_Temperature_Screen_2(String t3_Nextion_Text_Field, float t3_temperature, String t4_Nextion_Text_Field, float t4_temperature, String ref_temp2_screen_cmd)
 {
-    if (ref_temp2_screen_cmd == inData)
+   /* if (ref_temp2_screen_cmd == inData)
     {
         temperatures_control.measure_temperatures();
         outData = t3_Nextion_Text_Field + String(t3_temperature, 1) + "\"";
         sendDataToDisplay();
         outData = t4_Nextion_Text_Field + String(t4_temperature, 1) + "\"";
         sendDataToDisplay();
-    }
+    }*/
 }
 
 Display display_control;
