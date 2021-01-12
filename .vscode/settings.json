@@ -4,5 +4,9 @@
         "println",
         "psram",
         "write"
-    ]
+    ],
+    "cSpell.ignoreWords": [
+        "bhmanual"
+    ],
+    "cmake.configureOnOpen": false
 }

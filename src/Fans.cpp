@@ -28,7 +28,6 @@ float Fans::fan1_control_voltage_up(String Nextion_Text_Field_f1, float f1_contr
     // incerase fan 1 voltage
     if (f1_control_voltage <= 10.0)
     {
-      Serial.println(f1_control_voltage);
       f1_control_voltage += 0.1;
       outData = Nextion_Text_Field_f1 + String(f1_control_voltage, 1) + String(" V") + "\""; // generate string for the display
       display_control.sendDataToDisplay();
@@ -97,7 +96,7 @@ float Fans::fan2_control_voltage_up(String Nextion_Text_Field_f2, float f2_contr
   { // increase fan 2 voltage
     if (f2_control_voltage <= 10.0)
     {
-      f2_control_voltage +=0.1;
+      f2_control_voltage += 0.1;
       outData = Nextion_Text_Field_f2 + String(f2_control_voltage, 1) + String(" V") + "\"";
       display_control.sendDataToDisplay();
       f2_calculate_pwm_value(f2_control_voltage);

@@ -67,11 +67,11 @@ extern unsigned int DS18B20_PRECISION;
 extern int temp_measure_interval;
 ////////TIMERS/////////////////
 extern unsigned long timer1; //used for temperature measurement
-extern unsigned long timer2; 
-extern unsigned long timer3; 
-extern unsigned long timer4; 
-extern unsigned long timer5; 
-extern unsigned long timer6; 
+extern unsigned long timer2;
+extern unsigned long timer3;
+extern unsigned long timer4;
+extern unsigned long timer5;
+extern unsigned long timer6;
 /////DISPLAY/////
 extern String f1_Nextion_Text_Field;
 extern String f1_plus_cmd;
@@ -92,7 +92,8 @@ extern int temperature_sensor;
 
 /////TEMPERATURES/////
 extern String h_manual_on_off;
-extern bool h_manual_control;
+extern bool h_manual_control_state_new;
+extern bool h_manual_control_state_old;
 extern String h1_manual_on;
 extern String h1_manual_off;
 extern String h2_manual_on;
@@ -100,8 +101,13 @@ extern String h2_manual_off;
 extern String h3_manual_on;
 extern String h2_manual_off;
 extern String h1_Nextion_Text_Field;
-extern String h2_Nextion_Text_Field; 
+extern String h2_Nextion_Text_Field;
 extern String h3_Nextion_Text_Field;
+extern byte threshhold_temperature;
+
+/////HEATERS/////
+extern bool new_state_h1;
 extern bool heater1_on_off_state;
 extern bool heater2_on_off_state;
 extern bool heater3_on_off_state;
+extern bool manual_control_button_state;

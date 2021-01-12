@@ -1,6 +1,7 @@
 #include "definitions.h"
 #include "Temperatures.h"
 #include "Display.h"
+#include "Heaters.h"
 #include <Arduino.h>
 #include <DallasTemperature.h>
 #include <OneWire.h>
@@ -109,36 +110,42 @@ void Temperatures::measure_temperatures()
     if (millis() > timer1 + temp_measure_interval)
     {
         timer1 = millis();
-        DS18B20.requestTemperatures();
+      //  DS18B20.requestTemperatures();
 
         if (temperature_sensor == 1)
         {
+            DS18B20.requestTemperaturesByIndex(0);
             T_1 = DS18B20.getTempCByIndex(0);
-            Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_1, 1) + "°C");
+           // Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_1, 1) + "°C");
             temperature_sensor++;
             outData = "Temperatures1.tt1.txt=\"" + String(T_1, 1) + "\"";
             display_control.sendDataToDisplay();
         }
         else if (temperature_sensor == 2)
         {
-            T_2 = DS18B20.getTempCByIndex(1);
-            Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_2, 1) + "°C");
+             DS18B20.requestTemperaturesByIndex(1);
+                       T_2 = DS18B20.getTempCByIndex(1);
+           // Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_2, 1) + "°C");
             temperature_sensor++;
             outData = "Temperatures1.tt2.txt=\"" + String(T_2, 1) + "\"";
             display_control.sendDataToDisplay();
         }
         else if (temperature_sensor == 3)
         {
+             DS18B20.requestTemperaturesByIndex(2);
+            
             T_3 = DS18B20.getTempCByIndex(2);
-            Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_3, 1) + "°C");
+          //  Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_3, 1) + "°C");
             temperature_sensor++;
             outData = "Temperatures2.tt3.txt=\"" + String(T_3, 1) + "\"";
             display_control.sendDataToDisplay();
         }
         else if (temperature_sensor == 4)
         {
+            DS18B20.requestTemperaturesByIndex(3);
+           
             T_4 = DS18B20.getTempCByIndex(3);
-            Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_4, 1) + "°C");
+         //   Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_4, 1) + "°C");
             temperature_sensor = 1;
             outData = "Temperatures2.tt4.txt=\"" + String(T_4, 1) + "\"";
             display_control.sendDataToDisplay();
