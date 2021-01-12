@@ -14,6 +14,7 @@
   Debug Level - none
   PSRAM - Disabled
 */
+#include <Arduino.h>
 #include <Logic.h>
 #include <SPIFFS.h>
 #include <OneWire.h>
@@ -23,15 +24,41 @@
 #include "Fans.h"
 #include "Temperatures.h"
 #include "Heaters.h"
+#include "Logic.h"
+
+void read_DS18B20_temperatures_core_0(void * parameter)
+{
+
+  for (;;)
+  { // infinite loop
+
+    // Turn the LED on
+    temperatures_control.measure_temperatures();
+
+    // Pause the task for 500ms
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+  }
+}
+
+TaskHandle_t Task1;
 
 void setup()
 {
-
+    
     Serial.begin(115200);
     //Serial2.begin(baud-rate, protocol, RX pin, TX pin);
     Serial2.begin(115200, SERIAL_8N1, 17, 16); //there is a mistake in the circuit
     //in the Nextion editor in Preinitialize Event - input: baud=115200
     Serial2.setTimeout(100);
+
+    xTaskCreatePinnedToCore(
+      read_DS18B20_temperatures_core_0, /* Function to implement the task */
+      "Task1", /* Name of the task */
+      10000,  /* Stack size in words */
+      NULL,  /* Task input parameter */
+      0,  /* Priority of the task */
+      &Task1,  /* Task handle. */
+      0); /* Core where the task should run */
 
     // configure the PWM of FAN1
     ledcSetup(fan_1_PWM_Channel, fan_1_PWM_frequency, fan_1_PWM_resolution);
@@ -83,6 +110,9 @@ void setup()
     digitalWrite(H2, LOW);
     digitalWrite(H3, LOW);
 
+
+    /*A method for measuring the temperatures, setting up the display and populating the variables must be made*/
+  
 } // end void setup
 
 void loop()
@@ -98,14 +128,21 @@ void loop()
     fan2_0_10_voltage_input = fans_control.fan2_control_voltage_down(f2_Nextion_Text_Field, fan2_0_10_voltage_input, f2_minus_cmd);
     fans_control.fan2_control_on_off();
     display_control.Refresh_Fans_Screen(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f2_Nextion_Text_Field, fan2_0_10_voltage_input, ref_fans_screen_cmd);
-    display_control.Refresh_Temperature_Screen_1(t1_Nextion_Text_Field, T_1, t2_Nextion_Text_Field, T_2, ref_temp1_screen_cmd);
-    display_control.Refresh_Temperature_Screen_2(t3_Nextion_Text_Field, T_3, t4_Nextion_Text_Field, T_4, ref_temp2_screen_cmd);
-   // temperatures_control.measure_temperatures();
+    heaters_control.heaters_temperature_contol();
     heaters_control.heaters_manual_control();
-    heaters_control.h1_manual_on_off();
-    heaters_control.h2_manual_on_off();
-    heaters_control.h3_manual_on_off();
+    display_control.menu_navigation_Nextion();
+    if (inData == "info")
+    {
+        Serial.println("Heater1 state is: " + String(heater1_on_off_state));
+        Serial.println("Manual control is : " + String(h_manual_control_state_new));
+        Serial.println("new_state_h1 : " + String(new_state_h1));
+        
 
+
+
+    }
+
+  
 
     //check_time_for_execution(); //Measure the time needed to process everything once
 

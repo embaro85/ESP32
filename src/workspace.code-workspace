@@ -9,5 +9,9 @@
 			"path": "..\\..\\test"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"cSpell.words": [
+			"bhmanual"
+		]
+	}
 }

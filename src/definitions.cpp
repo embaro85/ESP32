@@ -61,16 +61,15 @@ float T_5 = 0.00;
 float T_6 = 0.00;
 
 unsigned int DS18B20_PRECISION = 11;
-int temp_measure_interval = 5000;
-int temperature_sensor=1;
+int temperature_sensor = 1;
 
 ////////TIMERS/////////////////
 unsigned long timer1 = 0; //used for temperature measurement
-unsigned long timer2 = 0; //used for temperature measurement
-unsigned long timer3 = 0; //used for temperature measurement
-unsigned long timer4 = 0; //used for temperature measurement
-unsigned long timer5 = 0; //used for temperature measurement
-unsigned long timer6 = 0; //used for temperature measurement
+unsigned long timer2 = 0; //not used
+unsigned long timer3 = 0; //not used
+unsigned long timer4 = 0; //not used
+unsigned long timer5 = 0; //not used
+unsigned long timer6 = 0; //not used
 /////DISPLAY/////
 String f1_Nextion_Text_Field = "tf1.txt=\"";
 String f1_plus_cmd = "f1_pl";
@@ -79,7 +78,6 @@ String f2_Nextion_Text_Field = "tf2.txt=\"";
 String f2_plus_cmd = "f2_pl";
 String f2_minus_cmd = "f2_mi";
 String ref_fans_screen_cmd = "f_m";
-
 String ref_temp1_screen_cmd = "t_m";
 String ref_temp2_screen_cmd = "t_m_1";
 String t1_Nextion_Text_Field = "tt1.txt=\"";
@@ -89,8 +87,10 @@ String t4_Nextion_Text_Field = "tt4.txt=\"";
 String on_temp_screen_one;
 
 /////TEMPERATURES/////
+int temp_measure_interval = 100;
 String h_manual_on_off = "ok_h_man";
-bool h_manual_control = false;
+bool h_manual_control_state_new;
+bool h_manual_control_state_old;
 String h1_manual_on = "h1_on";
 String h1_manual_off = "h1_off";
 String h2_manual_on = "h2_on";
@@ -100,8 +100,11 @@ String h3_manual_off = "h3_off";
 String h1_Nextion_Text_Field = "th1.txt=\"";
 String h2_Nextion_Text_Field = "th2.txt=\"";
 String h3_Nextion_Text_Field = "th3.txt=\"";
-bool heater1_on_off_state;
+byte threshhold_temperature = 27;
+
+/////HEATERS/////
+bool new_state_h1 = true;
+bool heater1_on_off_state = false;
 bool heater2_on_off_state;
 bool heater3_on_off_state;
-
-
+bool manual_control_button_state;
