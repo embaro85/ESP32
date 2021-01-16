@@ -7,7 +7,7 @@ class Temperatures
 {
 
 public:
-    void printAddress(DeviceAddress deviceAddress);
+    //void printAddress(DeviceAddress deviceAddress);
     void temp_sensor_begin(); // used once in Setup
     void measure_temperatures();
 };

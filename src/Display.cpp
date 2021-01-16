@@ -164,8 +164,10 @@ void Display::Refresh_Fans_Screen(String Nextion_Text_Field_f1, float f1_control
         sendDataToDisplay();
         outData = "bt0.val=" + String(f1_on_off_state);
         sendDataToDisplay();
+        Serial.println("Fan 1 state is: " + String(f1_on_off_state));
         outData = "bt1.val=" + String(f2_on_off_state);
         sendDataToDisplay();
+        Serial.println("Fan 2 state is: " + String(f2_on_off_state));
     }
 }
 
@@ -268,7 +270,7 @@ void Display::menu_navigation_Nextion()
     }
     if (inData == "display")
     {
-
+        go_to_page_Nextion(9);
     }
 }
 
@@ -276,6 +278,164 @@ void Display::refresh_heaters_screen()
 {
     h_manual_control_state_new = false;
     set_properties_page_temperature_control();
+}
+void Display::calculate_auto_off_period()
+{
+
+    auto_off_period = ten_seconds + twenty_seconds + sixty_seconds + hudredAndTwenty_seconds;
+    Serial.println(auto_off_period);
+    outData = "t2.txt=\"" + String(auto_off_period) + " seconds"
+                                                      "\"";
+    sendDataToDisplay();
+}
+
+void Display::display_settings_menu()
+{
+    if (inData == "pl_display_brightness")
+    {
+        if (display_brightness < 100)
+        {
+            display_brightness = display_brightness + 10;
+            outData = "h0.val=" + String(display_brightness);
+            sendDataToDisplay();
+            outData = "dims=" + String(display_brightness);
+            sendDataToDisplay();
+            outData = "n0.val=" + String(display_brightness);
+            sendDataToDisplay();
+            Serial.println(display_brightness); //for debugging
+        }
+    }
+    if (inData == "mi_display_brightness")
+    {
+        if (display_brightness >= 30)
+        {
+            display_brightness = display_brightness - 10;
+            outData = "h0.val=" + String(display_brightness);
+            sendDataToDisplay();
+            outData = "dims=" + String(display_brightness);
+            sendDataToDisplay();
+            outData = "n0.val=" + String(display_brightness);
+            sendDataToDisplay();
+            Serial.println(display_brightness); //for debugging
+        }
+    }
+    if (inData == "auto_off_on")
+    {
+        outData = "vis bt0,1";
+        sendDataToDisplay();
+        outData = "vis bt1,1";
+        sendDataToDisplay();
+        outData = "vis bt2,1";
+        sendDataToDisplay();
+        outData = "vis bt3,1";
+        sendDataToDisplay();
+        outData = "vis b7,1";
+        sendDataToDisplay();
+        outData = "vis t2,1";
+        sendDataToDisplay();
+        outData = "vis t3,0";
+        sendDataToDisplay();
+        outData = "vis c1,0";
+        sendDataToDisplay();
+    }
+    if (inData == "auto_off_off")
+    {
+        outData = "vis bt0,0";
+        sendDataToDisplay();
+        outData = "vis bt1,0";
+        sendDataToDisplay();
+        outData = "vis bt2,0";
+        sendDataToDisplay();
+        outData = "vis bt3,0";
+        sendDataToDisplay();
+        outData = "vis b7,0";
+        sendDataToDisplay();
+        outData = "vis t2,0";
+        sendDataToDisplay();
+        outData = "vis t3,1";
+        sendDataToDisplay();
+        outData = "vis c1,1";
+        sendDataToDisplay();
+        auto_off_period = 0;
+        display_auto_on_off_state = false;
+        outData = "thsp=0";
+        sendDataToDisplay();
+        outData = "thup=0";
+    }
+    if (inData == "time_ok")
+    {
+        outData = "vis bt0,0";
+        sendDataToDisplay();
+        outData = "vis bt1,0";
+        sendDataToDisplay();
+        outData = "vis bt2,0";
+        sendDataToDisplay();
+        outData = "vis bt3,0";
+        sendDataToDisplay();
+        outData = "vis b7,0";
+        sendDataToDisplay();
+        outData = "vis t2,0";
+        sendDataToDisplay();
+        outData = "vis t3,1";
+        sendDataToDisplay();
+        outData = "vis c1,1";
+        sendDataToDisplay();
+        if (auto_off_period > 0)
+        {
+            //store the value
+            outData = "thsp=" + String(auto_off_period);
+            sendDataToDisplay();
+            outData = "thup=1";
+            sendDataToDisplay();
+            display_auto_on_off_state = true;
+        }
+        else
+        {
+            outData = "thsp=0";
+            sendDataToDisplay();
+            display_auto_on_off_state = false;
+        }
+    }
+    if (inData == "10_seconds")
+    {
+        ten_seconds = 10;
+        calculate_auto_off_period();
+    }
+    if (inData == "minus_10_seconds")
+    {
+        ten_seconds = 0;
+        calculate_auto_off_period();
+    }
+    if (inData == "20_seconds")
+    {
+        twenty_seconds = 20;
+        calculate_auto_off_period();
+    }
+    if (inData == "minus_20_seconds")
+    {
+        twenty_seconds = 0;
+        calculate_auto_off_period();
+    }
+    if (inData == "60_seconds")
+    {
+        sixty_seconds = 60;
+        calculate_auto_off_period();
+    }
+    if (inData == "minus_60_seconds")
+    {
+        sixty_seconds = 0;
+        calculate_auto_off_period();
+    }
+    if (inData == "120_seconds")
+    {
+        hudredAndTwenty_seconds = 120;
+        calculate_auto_off_period();
+    }
+    if (inData == "minus_120_seconds")
+    {
+        hudredAndTwenty_seconds = 0;
+        calculate_auto_off_period();
+    }
 }
 
 Display display_control;

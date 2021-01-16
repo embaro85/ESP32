@@ -6,7 +6,9 @@
         "write"
     ],
     "cSpell.ignoreWords": [
-        "bhmanual"
+        "bhmanual",
+        "thsp",
+        "thup"
     ],
     "cmake.configureOnOpen": false
 }

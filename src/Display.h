@@ -14,5 +14,9 @@ public:
     void menu_navigation_Nextion();
     //void set_properties_page_temperature_control();
     void refresh_heaters_screen();
+void display_settings_menu();
+void calculate_auto_off_period();
+
+
 };
 extern Display display_control;

@@ -20,6 +20,7 @@ float fan1_0_10_voltage_input; //input from display
 int fan1_0_10_voltage_output;
 float fan_1_Vd;
 float fan_1_Dc;
+
 //FAN 2
 #define fan_2_PWM_pin 33
 const int fan_2_PWM_Channel = 1;
@@ -44,9 +45,9 @@ String inData;  //main variable for incoming data from the display
 String outData; //main variable for outgoing data to the display
 bool f1_on_off_state;
 bool f2_on_off_state;
-String new_settings;
-String old_settings;
-String saved_settings;
+String new_settings_fans;
+String old_settings_fans;
+String saved_settings_fans;
 String f1_voltage_string;
 String f2_voltage_string;
 String f1_on_off_state_string;
@@ -60,7 +61,7 @@ float T_4 = 0.00;
 float T_5 = 0.00;
 float T_6 = 0.00;
 
-unsigned int DS18B20_PRECISION = 11;
+unsigned int DS18B20_PRECISION = 10;
 int temperature_sensor = 1;
 
 ////////TIMERS/////////////////
@@ -85,6 +86,18 @@ String t2_Nextion_Text_Field = "tt2.txt=\"";
 String t3_Nextion_Text_Field = "tt3.txt=\"";
 String t4_Nextion_Text_Field = "tt4.txt=\"";
 String on_temp_screen_one;
+int display_brightness;
+int auto_off_period;
+int ten_seconds;
+int twenty_seconds;
+int sixty_seconds;
+int hudredAndTwenty_seconds;
+bool calculate_time_for_auto_screen_off;
+bool display_auto_on_off_state;
+bool display_screen_lock_on_off_state;
+String new_display_settings;
+String old_display_settings;
+String saved_values_display_settings;
 
 /////TEMPERATURES/////
 int temp_measure_interval = 100;

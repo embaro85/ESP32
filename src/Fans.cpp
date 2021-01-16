@@ -2,6 +2,22 @@
 #include "definitions.h"
 #include "Fans.h"
 
+void turn_fan2_on_or_off(uint8_t fan_number, String on_or_off) //F1 or F2
+{
+  if (on_or_off == "ON")
+  {
+    digitalWrite(fan_number, HIGH);
+    f2_on_off_state = true;
+    Serial.println(fan_number + " is: " + String(on_or_off));
+  }
+  if (on_or_off == "OFF")
+  {
+    digitalWrite(fan_number, LOW);
+    f2_on_off_state = false;
+    Serial.println(fan_number + " is: " + on_or_off);
+  }
+}
+
 void f1_calculate_pwm_value(float pwm)
 {
   /* Setting the desired voltage by setting the duty cycle:
@@ -23,7 +39,6 @@ void f1_calculate_pwm_value(float pwm)
 float Fans::fan1_control_voltage_up(String Nextion_Text_Field_f1, float f1_control_voltage, String cmd)
 {
   if (cmd == inData)
-
   {
     // incerase fan 1 voltage
     if (f1_control_voltage <= 10.0)
@@ -54,18 +69,17 @@ float Fans::fan1_control_voltage_down(String Nextion_Text_Field_f1, float f1_con
 
 void Fans::fan1_control_on_off()
 {
-  if (inData == "f1_on_off")
+  if (inData == "f1_on")
   { // toggle ON/OFF fan1
-    f1_on_off_state = !f1_on_off_state;
-    Serial.print("Fan 1 is: ");
-    if (f1_on_off_state == true)
-    {
-      Serial.println("ON");
-    }
-    else
-    {
-      Serial.println("OFF");
-    }
+    digitalWrite(F1, HIGH);
+    f1_on_off_state = true;
+    Serial.println("Fan 1 is ON");
+  }
+  else if (inData == "f1_off")
+  {
+    digitalWrite(F1, LOW);
+    f1_on_off_state = false;
+    Serial.println("Fan 1 is OFF");
   }
 }
 
@@ -122,18 +136,17 @@ float Fans::fan2_control_voltage_down(String Nextion_Text_Field_f2, float f2_con
 
 void Fans::fan2_control_on_off()
 {
-  if (inData == "f2_on_off")
-  { // toggle ON/OFF fan2
-    f2_on_off_state = !f2_on_off_state;
-    Serial.print("Fan 2 is: ");
-    if (f2_on_off_state == true)
-    {
-      Serial.println("ON");
-    }
-    else
-    {
-      Serial.println("OFF");
-    }
+  if (inData == "f2_on")
+  {
+    digitalWrite(F2, HIGH);
+    f2_on_off_state = true;
+    Serial.println("Fan 2 is ON");
+  }
+  else if (inData == "f2_off")
+  {
+    digitalWrite(F2, LOW);
+    f2_on_off_state = false;
+    Serial.println("Fan 2 is OFF");
   }
 };
 
