@@ -23,6 +23,7 @@ extern float fan_1_Vd;
 extern float fan_1_Dc;
 extern String f1_Nextion_Text_Field;
 extern String ref_fans_screen_cmd;
+
 //FAN 2
 #define fan_2_PWM_pin 33
 extern const int fan_2_PWM_Channel;
@@ -48,9 +49,9 @@ extern String inData;  //main variable for incoming data from the display
 extern String outData; //main variable for outgoing data to the display
 extern bool f1_on_off_state;
 extern bool f2_on_off_state;
-extern String new_settings;
-extern String old_settings;
-extern String saved_settings;
+extern String new_settings_fans;
+extern String old_settings_fans;
+extern String saved_settings_fans;
 extern String f1_voltage_string;
 extern String f2_voltage_string;
 extern String f1_on_off_state_string;
@@ -89,6 +90,16 @@ extern String t3_Nextion_Text_Field;
 extern String t4_Nextion_Text_Field;
 extern String on_temp_screen_one;
 extern int temperature_sensor;
+extern int display_brightness;
+extern int auto_off_period;
+extern int ten_seconds;
+extern int twenty_seconds;
+extern int sixty_seconds;
+extern int hudredAndTwenty_seconds;
+extern bool calculate_time_for_auto_screen_off;
+extern bool display_auto_on_off_state;
+extern bool display_screen_lock_on_off_state;
+extern String saved_values_display_settings;
 
 /////TEMPERATURES/////
 extern String h_manual_on_off;
