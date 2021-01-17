@@ -98,6 +98,11 @@ bool display_screen_lock_on_off_state;
 String new_display_settings;
 String old_display_settings;
 String saved_values_display_settings;
+uint16_t screen_lock_pin;
+uint8_t screen_lock_pin_confirm;
+
+const uint8_t screen_lock_master_pin = 9307;
+String display_screen_lock_period;
 
 /////TEMPERATURES/////
 int temp_measure_interval = 100;

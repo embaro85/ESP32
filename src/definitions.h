@@ -99,7 +99,14 @@ extern int hudredAndTwenty_seconds;
 extern bool calculate_time_for_auto_screen_off;
 extern bool display_auto_on_off_state;
 extern bool display_screen_lock_on_off_state;
+extern String new_display_settings;
+extern String old_display_settings;
 extern String saved_values_display_settings;
+extern uint16_t screen_lock_pin;
+extern uint8_t screen_lock_pin_confirm;
+extern const uint8_t screen_lock_master_pin;
+extern String display_screen_lock_period;
+
 
 /////TEMPERATURES/////
 extern String h_manual_on_off;

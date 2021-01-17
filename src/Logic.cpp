@@ -60,10 +60,10 @@ void Logic::check_and_save_data_Fans()
 void Logic::check_and_save_data_display_settings()
 { // check if there is a change in the fans setup and control voltage
 
-  new_display_settings = String(display_brightness) + "," + String(display_auto_on_off_state) + "," + String(auto_off_period) + "," + String(display_screen_lock_on_off_state) + ",";
+  new_display_settings = String(display_brightness) + "," + String(display_auto_on_off_state) + "," + String(auto_off_period) + ","  + String(display_screen_lock_on_off_state) + ","+ String(display_screen_lock_period) + ",";
   if (new_display_settings != old_display_settings)
   {
-    Serial.println(new_settings_display);
+    Serial.println(new_display_settings);
     File saved_values_display_settings;
     saved_values_display_settings = SPIFFS.open("/values_display_settings.txt", FILE_WRITE);
     if (saved_values_display_settings.print(new_display_settings))

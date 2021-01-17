@@ -171,7 +171,7 @@ void Display::Refresh_Fans_Screen(String Nextion_Text_Field_f1, float f1_control
     }
 }
 
-void Display::set_visibility_on_Nextion(String Element_name, String Visibility_toggle)
+void Display::set_visibility_on_Nextion(String Element_name, uint8_t Visibility_toggle)
 {
     outData = "vis " + Element_name + "," + Visibility_toggle;
     display_control.sendDataToDisplay();
@@ -436,6 +436,22 @@ void Display::display_settings_menu()
         hudredAndTwenty_seconds = 0;
         calculate_auto_off_period();
     }
+    if (inData == "d_lock_on")
+    {
+    set_visibility_on_Nextion("t2",0);
+    set_visibility_on_Nextion("b11",0);
+    delay(1000);
+    go_to_page_Nextion(11);
+
+    }
+    if(inData.substring(0,5) == "pin1_")
+    {
+        screen_lock_pin = inData.substring(5).toInt();
+        Serial.println (screen_lock_pin);
+        set_visibility_on_Nextion("b15",0);
+        set_visibility_on_Nextion("b11",1);
+    }
 }
+
 
 Display display_control;
