@@ -79,35 +79,36 @@ void setup()
     Serial.println("SPIFFS successfully loaded");
   }
   delay(100);
+display_control.set_visibility_on_Nextion("t2",0);
+display_control.set_visibility_on_Nextion("b11", 0);
+logic_control.Load_Saved_Settings_Fans(); //  Load the existing settings for the fans only
 
-  logic_control.Load_Saved_Settings_Fans(); //  Load the existing settings for the fans only
+pinMode(FP1, OUTPUT);
+pinMode(FP2, OUTPUT);
+pinMode(FP3, OUTPUT);
+pinMode(FP4, OUTPUT);
+pinMode(F1, OUTPUT);
+pinMode(F2, OUTPUT);
+pinMode(H1, OUTPUT);
+pinMode(H2, OUTPUT);
+pinMode(H3, OUTPUT);
+pinMode(fan_1_PWM_pin, OUTPUT);
+pinMode(fan_2_PWM_pin, OUTPUT);
+pinMode(valve_1_PWM_pin, OUTPUT);
+pinMode(Pressure1, INPUT_PULLDOWN);
+pinMode(Pressure2, INPUT_PULLDOWN);
 
-  pinMode(FP1, OUTPUT);
-  pinMode(FP2, OUTPUT);
-  pinMode(FP3, OUTPUT);
-  pinMode(FP4, OUTPUT);
-  pinMode(F1, OUTPUT);
-  pinMode(F2, OUTPUT);
-  pinMode(H1, OUTPUT);
-  pinMode(H2, OUTPUT);
-  pinMode(H3, OUTPUT);
-  pinMode(fan_1_PWM_pin, OUTPUT);
-  pinMode(fan_2_PWM_pin, OUTPUT);
-  pinMode(valve_1_PWM_pin, OUTPUT);
-  pinMode(Pressure1, INPUT_PULLDOWN);
-  pinMode(Pressure2, INPUT_PULLDOWN);
+digitalWrite(FP1, LOW);
+digitalWrite(FP2, LOW);
+digitalWrite(FP3, LOW);
+digitalWrite(FP4, LOW);
+digitalWrite(F1, LOW);
+digitalWrite(F2, LOW);
+digitalWrite(H1, LOW);
+digitalWrite(H2, LOW);
+digitalWrite(H3, LOW);
 
-  digitalWrite(FP1, LOW);
-  digitalWrite(FP2, LOW);
-  digitalWrite(FP3, LOW);
-  digitalWrite(FP4, LOW);
-  digitalWrite(F1, LOW);
-  digitalWrite(F2, LOW);
-  digitalWrite(H1, LOW);
-  digitalWrite(H2, LOW);
-  digitalWrite(H3, LOW);
-
-  /*A method for measuring the temperatures, setting up the display and populating the variables must be made*/
+/*A method for measuring the temperatures, setting up the display and populating the variables must be made*/
 
 } // end void setup
 
@@ -117,6 +118,7 @@ void loop()
   inData = "0";
   display_control.receive_data_from_display();
   logic_control.check_and_save_data_Fans();
+  logic_control.check_and_save_data_display_settings();
   fan1_0_10_voltage_input = fans_control.fan1_control_voltage_up(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f1_plus_cmd);
   fan1_0_10_voltage_input = fans_control.fan1_control_voltage_down(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f1_minus_cmd);
   fans_control.fan1_control_on_off();
