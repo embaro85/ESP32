@@ -81,7 +81,6 @@ extern String f2_Nextion_Text_Field;
 extern String f2_plus_cmd;
 extern String f2_minus_cmd;
 extern String ref_fans_screen_cmd;
-
 extern String ref_temp1_screen_cmd;
 extern String ref_temp2_screen_cmd;
 extern String t1_Nextion_Text_Field;
@@ -91,21 +90,31 @@ extern String t4_Nextion_Text_Field;
 extern String on_temp_screen_one;
 extern int temperature_sensor;
 extern int display_brightness;
+extern String display_brightness_string;
 extern int auto_off_period;
+extern String auto_off_period_string;
+
 extern int ten_seconds;
 extern int twenty_seconds;
 extern int sixty_seconds;
 extern int hudredAndTwenty_seconds;
 extern bool calculate_time_for_auto_screen_off;
 extern bool display_auto_on_off_state;
+extern String display_auto_on_off_state_string;
 extern bool display_screen_lock_on_off_state;
+extern String display_screen_lock_on_off_state_string;
 extern String new_display_settings;
 extern String old_display_settings;
 extern String saved_values_display_settings;
 extern uint16_t screen_lock_pin;
-extern uint8_t screen_lock_pin_confirm;
-extern const uint8_t screen_lock_master_pin;
-extern String display_screen_lock_period;
+extern String screen_lock_pin_string;
+
+extern uint16_t screen_lock_pin_confirm;
+extern uint16_t screen_lock_pin_first_attemt;
+
+extern const uint16_t screen_lock_master_pin;
+extern int display_screen_lock_period;
+extern String display_screen_lock_period_string;
 
 
 /////TEMPERATURES/////

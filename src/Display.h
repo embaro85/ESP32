@@ -11,12 +11,12 @@ public:
     void Refresh_Temperature_Screen_2(String t3_Nextion_Text_Field, float t3_temperature, String t4_Nextion_Text_Field, float t4_temperature, String ref_temp2_screen_cmd);
     void set_visibility_on_Nextion(String Element_name, uint8_t Visibility_toggle);
     void go_to_page_Nextion(int Page_number);
+    void load_screen_settings_screen();
+
     void menu_navigation_Nextion();
     //void set_properties_page_temperature_control();
     void refresh_heaters_screen();
-void display_settings_menu();
-void calculate_auto_off_period();
-
-
+    void display_settings_menu();
+    void calculate_auto_off_period();
 };
 extern Display display_control;
