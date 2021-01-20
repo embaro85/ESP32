@@ -87,22 +87,28 @@ String t3_Nextion_Text_Field = "tt3.txt=\"";
 String t4_Nextion_Text_Field = "tt4.txt=\"";
 String on_temp_screen_one;
 int display_brightness;
+String display_brightness_string;
 int auto_off_period;
+String auto_off_period_string;
 int ten_seconds;
 int twenty_seconds;
 int sixty_seconds;
 int hudredAndTwenty_seconds;
 bool calculate_time_for_auto_screen_off;
 bool display_auto_on_off_state;
+String display_auto_on_off_state_string;
 bool display_screen_lock_on_off_state;
+String display_screen_lock_on_off_state_string;
 String new_display_settings;
 String old_display_settings;
 String saved_values_display_settings;
+uint16_t screen_lock_pin_first_attemt;
+uint16_t screen_lock_pin_confirm;
 uint16_t screen_lock_pin;
-uint8_t screen_lock_pin_confirm;
-
-const uint8_t screen_lock_master_pin = 9307;
-String display_screen_lock_period;
+String screen_lock_pin_string;
+const uint16_t screen_lock_master_pin = 9307;
+int display_screen_lock_period;
+String display_screen_lock_period_string;
 
 /////TEMPERATURES/////
 int temp_measure_interval = 100;

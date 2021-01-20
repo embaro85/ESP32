@@ -2,6 +2,7 @@
 #include "Display.h"
 #include "Temperatures.h"
 #include "Heaters.h"
+#include "Logic.h"
 //switches only the button value and text on the display, not the heater itself.
 void h1_switch_Nextion_btn_on_or_off(String switch_on_or_off)
 {
@@ -59,7 +60,6 @@ void h3_switch_Nextion_btn_on_or_off(String switch_on_or_off)
     }
     Serial.println(outData); //for debugging
 }
-
 //set the  heaters manual control page button states
 void set_properties_page_manual_control()
 {
@@ -132,7 +132,6 @@ void set_properties_page_temperature_control()
     outData = "Heaters1.bhmanual.val=" + String(h_manual_control_state_new); // set the check button to unchecked
     display_control.sendDataToDisplay();
 }
-
 void Display::sendDataToDisplay()
 { //send data to display
     Serial2.print(outData);
@@ -170,7 +169,6 @@ void Display::Refresh_Fans_Screen(String Nextion_Text_Field_f1, float f1_control
         Serial.println("Fan 2 state is: " + String(f2_on_off_state));
     }
 }
-
 void Display::set_visibility_on_Nextion(String Element_name, uint8_t Visibility_toggle)
 {
     outData = "vis " + Element_name + "," + Visibility_toggle;
@@ -273,7 +271,6 @@ void Display::menu_navigation_Nextion()
         go_to_page_Nextion(9);
     }
 }
-
 void Display::refresh_heaters_screen()
 {
     h_manual_control_state_new = false;
@@ -288,7 +285,6 @@ void Display::calculate_auto_off_period()
                                                       "\"";
     sendDataToDisplay();
 }
-
 void Display::display_settings_menu()
 {
     if (inData == "pl_display_brightness")
@@ -438,20 +434,75 @@ void Display::display_settings_menu()
     }
     if (inData == "d_lock_on")
     {
-    set_visibility_on_Nextion("t2",0);
-    set_visibility_on_Nextion("b11",0);
-    delay(1000);
-    go_to_page_Nextion(11);
-
+        go_to_page_Nextion(11);
     }
-    if(inData.substring(0,5) == "pin1_")
+    // the next functions/methods handle the pin verification and storage
+    if (inData.substring(0, 5) == "pin1_")
     {
-        screen_lock_pin = inData.substring(5).toInt();
-        Serial.println (screen_lock_pin);
-        set_visibility_on_Nextion("b15",0);
-        set_visibility_on_Nextion("b11",1);
+        screen_lock_pin_first_attemt = inData.substring(5).toInt();
+        Serial.println(screen_lock_pin_first_attemt);
+        uint16_t screen_lock_pin_digit_count = 0;
+        uint16_t _screen_lock_pin_first_attempt;
+        _screen_lock_pin_first_attempt = screen_lock_pin_first_attemt;
+        while (_screen_lock_pin_first_attempt > 0)
+        {
+            _screen_lock_pin_first_attempt = _screen_lock_pin_first_attempt / 10;
+            screen_lock_pin_digit_count++;
+            Serial.println(screen_lock_pin_digit_count);
+        }
+
+        if (screen_lock_pin_digit_count == 4)
+        {
+            set_visibility_on_Nextion("b15", 0);
+            set_visibility_on_Nextion("b11", 1);
+            set_visibility_on_Nextion("t1", 0);
+            set_visibility_on_Nextion("t2", 1);
+            outData = "t0.txt=\"" + String("") + "\"";
+            display_control.sendDataToDisplay();
+        }
+        else
+        {
+            set_visibility_on_Nextion("t0", 0);
+            set_visibility_on_Nextion("t3", 1);
+            delay(2000);
+            set_visibility_on_Nextion("t3", 0);
+            set_visibility_on_Nextion("t0", 1);
+        }
+    }
+    if (inData.substring(0, 5) == "pin2_")
+    {
+        screen_lock_pin_confirm = inData.substring(5).toInt();
+        if (screen_lock_pin_confirm == screen_lock_pin_first_attemt)
+        {
+            Serial.println("pins are matching and can be saved to the SPIFFS");
+            set_visibility_on_Nextion("t5", 1);
+            delay(2000);
+            set_visibility_on_Nextion("t5", 0);
+            screen_lock_pin = screen_lock_pin_confirm;
+            display_screen_lock_on_off_state = true;
+            logic_control.check_and_save_data_display_settings();
+            go_to_page_Nextion(9);
+        }
+
+        else
+        {
+            set_visibility_on_Nextion("t4", 1);
+            delay(2000);
+            set_visibility_on_Nextion("t4", 0);
+        }
     }
 }
 
-
+void Display::load_screen_settings_screen()
+{
+    if (inData == "display")
+    {
+        outData = "n0.val=" + String(display_brightness);
+        sendDataToDisplay();
+        outData = "h0.val=" + String(display_brightness);
+        sendDataToDisplay();
+        outData = "c0.val=" + String(display_auto_on_off_state);
+        sendDataToDisplay();
+    }
+}
 Display display_control;

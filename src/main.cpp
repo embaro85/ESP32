@@ -82,6 +82,7 @@ void setup()
 display_control.set_visibility_on_Nextion("t2",0);
 display_control.set_visibility_on_Nextion("b11", 0);
 logic_control.Load_Saved_Settings_Fans(); //  Load the existing settings for the fans only
+logic_control.load_saved_display_settings(); //load the existing settings for the display only
 
 pinMode(FP1, OUTPUT);
 pinMode(FP2, OUTPUT);
@@ -137,6 +138,10 @@ void loop()
     Serial.println("new_state_h1 : " + String(new_state_h1));
   }
 
+/*outData ="t0.txt=\"" + String("работи ли или не") + "\"";
+display_control.sendDataToDisplay();
+delay(1000);*/
+//Serial.println("мога да говоря български");
   //check_time_for_execution(); //Measure the time needed to process everything once
 
 } // end void loop
