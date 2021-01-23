@@ -45,7 +45,9 @@ extern unsigned long time_in_millis;
 extern unsigned long elapsed_time_in_millis;
 extern unsigned long timer_read_serial;
 extern int read_serial_interval;
-extern String inData;  //main variable for incoming data from the display
+extern String inData; //main variable for incoming data from the display
+//extern int inData2;
+
 extern String outData; //main variable for outgoing data to the display
 extern bool f1_on_off_state;
 extern bool f2_on_off_state;
@@ -106,16 +108,17 @@ extern String display_screen_lock_on_off_state_string;
 extern String new_display_settings;
 extern String old_display_settings;
 extern String saved_values_display_settings;
-extern uint16_t screen_lock_pin;
+extern String screen_lock_pin;
 extern String screen_lock_pin_string;
 
-extern uint16_t screen_lock_pin_confirm;
-extern uint16_t screen_lock_pin_first_attemt;
+extern String screen_lock_pin_confirm;
+extern String screen_lock_pin_first_attemt;
 
-extern const uint16_t screen_lock_master_pin;
+extern const String master_pin;
 extern int display_screen_lock_period;
 extern String display_screen_lock_period_string;
-
+extern uint16_t number_of_tries;
+extern uint16_t number_of_tries_master_pin;
 
 /////TEMPERATURES/////
 extern String h_manual_on_off;
@@ -138,3 +141,11 @@ extern bool heater1_on_off_state;
 extern bool heater2_on_off_state;
 extern bool heater3_on_off_state;
 extern bool manual_control_button_state;
+
+///Display components variables///
+extern String p9_n0;
+extern String p9_h0;
+extern String p9_c0;
+extern String p9_c1;
+extern String p13_n0;
+
