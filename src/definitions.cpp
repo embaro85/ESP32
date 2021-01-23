@@ -42,6 +42,7 @@ unsigned long elapsed_time_in_millis = 0;
 unsigned long timer_read_serial = 0;
 int read_serial_interval = 15000;
 String inData;  //main variable for incoming data from the display
+//int inData2;
 String outData; //main variable for outgoing data to the display
 bool f1_on_off_state;
 bool f2_on_off_state;
@@ -102,13 +103,15 @@ String display_screen_lock_on_off_state_string;
 String new_display_settings;
 String old_display_settings;
 String saved_values_display_settings;
-uint16_t screen_lock_pin_first_attemt;
-uint16_t screen_lock_pin_confirm;
-uint16_t screen_lock_pin;
+String screen_lock_pin_first_attemt;
+String screen_lock_pin_confirm;
+String screen_lock_pin;
 String screen_lock_pin_string;
-const uint16_t screen_lock_master_pin = 9307;
+const String master_pin = "9307";
 int display_screen_lock_period;
 String display_screen_lock_period_string;
+uint16_t number_of_tries=3;
+uint16_t number_of_tries_master_pin =3;
 
 /////TEMPERATURES/////
 int temp_measure_interval = 100;
@@ -132,3 +135,10 @@ bool heater1_on_off_state = false;
 bool heater2_on_off_state;
 bool heater3_on_off_state;
 bool manual_control_button_state;
+
+///Display components variables///
+String p9_n0 = "n0.val=";
+String p9_h0 = "h0.val=";
+String p9_c0 = "c0.val=";
+String p9_c1 = "c1.val=";
+String p13_n0 = "n0.val=";

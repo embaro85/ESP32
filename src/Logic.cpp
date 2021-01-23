@@ -19,7 +19,7 @@ void Logic::Load_Saved_Settings_Fans()
     Serial.println("Failed to open file for reading");
     return;
   }
-  Serial.print("File Content: ");
+  Serial.print("Fan Settings: ");
   saved_settings_fans = saved_values_fans.readString();
   new_settings_fans = saved_settings_fans;
   saved_values_fans.close();
@@ -64,7 +64,7 @@ void Logic::load_saved_display_settings()
     Serial.println("Failed to open file for reading");
     return;
   }
-  Serial.print("File Content: ");
+  Serial.print("Display Settings: ");
   old_display_settings = saved_values_display_settings.readString();
   saved_values_display_settings.close();
   Serial.println(old_display_settings);
@@ -72,28 +72,27 @@ void Logic::load_saved_display_settings()
                                                                                // read display brightness
   display_brightness_string = splitter->getItemAtIndex(0);
   display_brightness = display_brightness_string.toInt();
-// read the auto ON/OFF display setting state
+  // read the auto ON/OFF display setting state
   display_auto_on_off_state_string = splitter->getItemAtIndex(1);
   display_auto_on_off_state = display_auto_on_off_state_string.toInt();
-// read the set period for the screen sleep function 
+  // read the set period for the screen sleep function
   auto_off_period_string = splitter->getItemAtIndex(2);
   auto_off_period = auto_off_period_string.toInt();
-// read the screen lock display setting state 
+  // read the screen lock display setting state
   display_screen_lock_on_off_state_string = splitter->getItemAtIndex(3);
   display_screen_lock_on_off_state = display_screen_lock_on_off_state_string.toInt();
-// read the set screen lock period 
+  // read the set screen lock period
   display_screen_lock_period_string = splitter->getItemAtIndex(4);
   display_auto_on_off_state = display_auto_on_off_state_string.toInt();
-// read the saved PIN for the screen lock
-  screen_lock_pin_string = splitter->getItemAtIndex(5);
-  screen_lock_pin = screen_lock_pin_string.toInt();
-
+  // read the saved PIN for the screen lock
+  screen_lock_pin = splitter->getItemAtIndex(5);
   new_display_settings = old_display_settings;
 }
 void Logic::check_and_save_data_display_settings()
 { // check if there is a change in the display properties
 
-  new_display_settings = String(display_brightness) + "," + String(display_auto_on_off_state) + "," + String(auto_off_period) + "," + String(display_screen_lock_on_off_state) + "," + String(display_screen_lock_period) + "," + String(screen_lock_pin) + ",";
+  new_display_settings = String(display_brightness) + "," + String(display_auto_on_off_state) + "," + String(auto_off_period) + "," + String(display_screen_lock_on_off_state) + "," + String(display_screen_lock_period) + "," + String(screen_lock_pin);
+
   if (new_display_settings != old_display_settings)
   {
     Serial.println(new_display_settings);

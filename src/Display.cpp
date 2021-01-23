@@ -142,7 +142,6 @@ void Display::sendDataToDisplay()
 }
 void Display::receive_data_from_display()
 { // Read incoming data from Display
-
     if (Serial2.available() > 0)
     { // wait for a character
         inData = Serial2.readStringUntil('#');
@@ -244,12 +243,12 @@ void Display::menu_navigation_Nextion()
     {
 
         h_manual_control_state_new = false;
-        go_to_page_Nextion(2);
+        display_control.go_to_page_Nextion(2);
         set_properties_page_temperature_control();
     }
     if (inData == "s_m")
     {
-        go_to_page_Nextion(7);
+        display_control.go_to_page_Nextion(7);
     }
     if (inData == "h1_off")
     {
@@ -269,6 +268,11 @@ void Display::menu_navigation_Nextion()
     if (inData == "display")
     {
         go_to_page_Nextion(9);
+        load_display_screen_settings();
+    }
+    if (inData == "master_unlock")
+    {
+        display_control.go_to_page_Nextion(13);
     }
 }
 void Display::refresh_heaters_screen()
@@ -278,11 +282,9 @@ void Display::refresh_heaters_screen()
 }
 void Display::calculate_auto_off_period()
 {
-
     auto_off_period = ten_seconds + twenty_seconds + sixty_seconds + hudredAndTwenty_seconds;
     Serial.println(auto_off_period);
-    outData = "t2.txt=\"" + String(auto_off_period) + " seconds"
-                                                      "\"";
+    outData = "t2.txt=\"" + String(auto_off_period) + " seconds" + "\"";
     sendDataToDisplay();
 }
 void Display::display_settings_menu()
@@ -292,11 +294,9 @@ void Display::display_settings_menu()
         if (display_brightness < 100)
         {
             display_brightness = display_brightness + 10;
-            outData = "h0.val=" + String(display_brightness);
-            sendDataToDisplay();
+            display_control.update_value_of_screen_component(p9_h0, display_brightness);
+            display_control.update_value_of_screen_component(p9_n0, display_brightness);
             outData = "dims=" + String(display_brightness);
-            sendDataToDisplay();
-            outData = "n0.val=" + String(display_brightness);
             sendDataToDisplay();
             Serial.println(display_brightness); //for debugging
         }
@@ -306,52 +306,34 @@ void Display::display_settings_menu()
         if (display_brightness >= 30)
         {
             display_brightness = display_brightness - 10;
-            outData = "h0.val=" + String(display_brightness);
-            sendDataToDisplay();
+            display_control.update_value_of_screen_component(p9_h0, display_brightness);
+            display_control.update_value_of_screen_component(p9_n0, display_brightness);
             outData = "dims=" + String(display_brightness);
-            sendDataToDisplay();
-            outData = "n0.val=" + String(display_brightness);
             sendDataToDisplay();
             Serial.println(display_brightness); //for debugging
         }
     }
     if (inData == "auto_off_on")
     {
-        outData = "vis bt0,1";
-        sendDataToDisplay();
-        outData = "vis bt1,1";
-        sendDataToDisplay();
-        outData = "vis bt2,1";
-        sendDataToDisplay();
-        outData = "vis bt3,1";
-        sendDataToDisplay();
-        outData = "vis b7,1";
-        sendDataToDisplay();
-        outData = "vis t2,1";
-        sendDataToDisplay();
-        outData = "vis t3,0";
-        sendDataToDisplay();
-        outData = "vis c1,0";
-        sendDataToDisplay();
+        set_visibility_on_Nextion("bt0", 1);
+        set_visibility_on_Nextion("bt1", 1);
+        set_visibility_on_Nextion("bt2", 1);
+        set_visibility_on_Nextion("bt3", 1);
+        set_visibility_on_Nextion("bt7", 1);
+        set_visibility_on_Nextion("t2", 1);
+        set_visibility_on_Nextion("t3", 0);
+        set_visibility_on_Nextion("c1", 0);
     }
     if (inData == "auto_off_off")
     {
-        outData = "vis bt0,0";
-        sendDataToDisplay();
-        outData = "vis bt1,0";
-        sendDataToDisplay();
-        outData = "vis bt2,0";
-        sendDataToDisplay();
-        outData = "vis bt3,0";
-        sendDataToDisplay();
-        outData = "vis b7,0";
-        sendDataToDisplay();
-        outData = "vis t2,0";
-        sendDataToDisplay();
-        outData = "vis t3,1";
-        sendDataToDisplay();
-        outData = "vis c1,1";
-        sendDataToDisplay();
+        set_visibility_on_Nextion("bt0", 0);
+        set_visibility_on_Nextion("bt1", 0);
+        set_visibility_on_Nextion("bt2", 0);
+        set_visibility_on_Nextion("bt3", 0);
+        set_visibility_on_Nextion("b7", 0);
+        set_visibility_on_Nextion("t2", 0);
+        set_visibility_on_Nextion("t3", 1);
+        set_visibility_on_Nextion("c1", 1);
         auto_off_period = 0;
         display_auto_on_off_state = false;
         outData = "thsp=0";
@@ -360,22 +342,14 @@ void Display::display_settings_menu()
     }
     if (inData == "time_ok")
     {
-        outData = "vis bt0,0";
-        sendDataToDisplay();
-        outData = "vis bt1,0";
-        sendDataToDisplay();
-        outData = "vis bt2,0";
-        sendDataToDisplay();
-        outData = "vis bt3,0";
-        sendDataToDisplay();
-        outData = "vis b7,0";
-        sendDataToDisplay();
-        outData = "vis t2,0";
-        sendDataToDisplay();
-        outData = "vis t3,1";
-        sendDataToDisplay();
-        outData = "vis c1,1";
-        sendDataToDisplay();
+        set_visibility_on_Nextion("bt0", 0);
+        set_visibility_on_Nextion("bt1", 0);
+        set_visibility_on_Nextion("bt2", 0);
+        set_visibility_on_Nextion("bt3", 0);
+        set_visibility_on_Nextion("b7", 0);
+        set_visibility_on_Nextion("t2", 0);
+        set_visibility_on_Nextion("t3", 1);
+        set_visibility_on_Nextion("c1", 1);
         if (auto_off_period > 0)
         {
             //store the value
@@ -384,6 +358,8 @@ void Display::display_settings_menu()
             outData = "thup=1";
             sendDataToDisplay();
             display_auto_on_off_state = true;
+            outData = "t4.txt=\"" + String(auto_off_period) + "s" + "\"";
+            display_control.sendDataToDisplay();
         }
         else
         {
@@ -436,22 +412,21 @@ void Display::display_settings_menu()
     {
         go_to_page_Nextion(11);
     }
+    if (inData == "d_lock_off")
+    {
+        go_to_page_Nextion(12);
+    }
+    if (inData.substring(0, 4) == "pin_")
+    {
+        compare_screen_lock_pin();
+    }
     // the next functions/methods handle the pin verification and storage
     if (inData.substring(0, 5) == "pin1_")
     {
-        screen_lock_pin_first_attemt = inData.substring(5).toInt();
+        screen_lock_pin_first_attemt = inData.substring(5);
         Serial.println(screen_lock_pin_first_attemt);
-        uint16_t screen_lock_pin_digit_count = 0;
-        uint16_t _screen_lock_pin_first_attempt;
-        _screen_lock_pin_first_attempt = screen_lock_pin_first_attemt;
-        while (_screen_lock_pin_first_attempt > 0)
-        {
-            _screen_lock_pin_first_attempt = _screen_lock_pin_first_attempt / 10;
-            screen_lock_pin_digit_count++;
-            Serial.println(screen_lock_pin_digit_count);
-        }
 
-        if (screen_lock_pin_digit_count == 4)
+        if (screen_lock_pin_first_attemt.length() == 4)
         {
             set_visibility_on_Nextion("b15", 0);
             set_visibility_on_Nextion("b11", 1);
@@ -471,7 +446,7 @@ void Display::display_settings_menu()
     }
     if (inData.substring(0, 5) == "pin2_")
     {
-        screen_lock_pin_confirm = inData.substring(5).toInt();
+        screen_lock_pin_confirm = inData.substring(5);
         if (screen_lock_pin_confirm == screen_lock_pin_first_attemt)
         {
             Serial.println("pins are matching and can be saved to the SPIFFS");
@@ -482,6 +457,7 @@ void Display::display_settings_menu()
             display_screen_lock_on_off_state = true;
             logic_control.check_and_save_data_display_settings();
             go_to_page_Nextion(9);
+            load_display_screen_settings();
         }
 
         else
@@ -491,18 +467,101 @@ void Display::display_settings_menu()
             set_visibility_on_Nextion("t4", 0);
         }
     }
-}
-
-void Display::load_screen_settings_screen()
-{
-    if (inData == "display")
+    if (inData.substring(0, 6) == "m_pin_")
     {
-        outData = "n0.val=" + String(display_brightness);
-        sendDataToDisplay();
-        outData = "h0.val=" + String(display_brightness);
-        sendDataToDisplay();
-        outData = "c0.val=" + String(display_auto_on_off_state);
-        sendDataToDisplay();
+        String _master_pin = inData.substring(6);
+        if (_master_pin == master_pin)
+        {
+            display_control.go_to_page_Nextion(9);
+            display_control.load_display_screen_settings();
+        }
+        else 
+        {
+            
+            display_control.set_visibility_on_Nextion("t2", 1);
+            delay(2000);
+            display_control.set_visibility_on_Nextion("t2", 0);
+
+        }
     }
 }
+void Display::load_display_screen_settings()
+{
+    display_control.update_value_of_screen_component(p9_n0, display_brightness);
+    display_control.update_value_of_screen_component(p9_h0, display_brightness);
+    display_control.update_value_of_screen_component(p9_c0, display_auto_on_off_state);
+    display_control.update_value_of_screen_component(p9_c1, display_screen_lock_on_off_state);
+    outData = "t4.txt=\"" + String(auto_off_period) + "s" + "\"";
+    display_control.sendDataToDisplay();
+}
+void Display::compare_screen_lock_pin()
+{
+    String _pin_input;
+    _pin_input = inData.substring(4);
+    if (_pin_input == screen_lock_pin)
+    {
+        display_screen_lock_on_off_state = false;
+        screen_lock_pin = "";
+        go_to_page_Nextion(9);
+        load_display_screen_settings();
+        number_of_tries = 3;
+    }
+    else
+    {
+        number_of_tries--;
+        if (number_of_tries < 4)
+        {
+
+            set_visibility_on_Nextion("t2", 1);
+            delay(2000);
+            set_visibility_on_Nextion("t2", 0);
+            set_visibility_on_Nextion("t3", 1);
+            set_visibility_on_Nextion("n0", 1);
+            outData = "n0.val=" + String(number_of_tries);
+            sendDataToDisplay();
+        }
+        if (number_of_tries == 0)
+        {
+            go_to_page_Nextion(9);
+            load_display_screen_settings();
+            number_of_tries = 3;
+        }
+    }
+}
+void Display::update_value_of_screen_component(String nextion_component, uint8_t variable)
+{
+    outData = nextion_component + String(variable);
+    sendDataToDisplay();
+}
+void Display::unlock_screen_with_master_pin()
+{
+    String _master_pin_input = inData.substring(6);
+    if (_master_pin_input == master_pin)
+    {
+        display_screen_lock_on_off_state = false;
+        screen_lock_pin = "";
+        display_control.go_to_page_Nextion(9);
+        display_control.load_display_screen_settings();
+        number_of_tries_master_pin =3;
+    }
+    else
+    {
+        number_of_tries_master_pin--;
+        if (number_of_tries_master_pin < 4)
+        {
+            display_control.set_visibility_on_Nextion("t2",1);
+            delay(2000);
+            display_control.set_visibility_on_Nextion("t2",0);
+            display_control.update_value_of_screen_component(p13_n0, number_of_tries_master_pin);
+        }
+        if (number_of_tries_master_pin == 0)
+        {
+            display_control.go_to_page_Nextion(9);
+            display_control.load_display_screen_settings();
+            number_of_tries_master_pin = 3;
+        }
+    }
+    
+}
+
 Display display_control;

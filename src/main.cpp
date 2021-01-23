@@ -79,38 +79,37 @@ void setup()
     Serial.println("SPIFFS successfully loaded");
   }
   delay(100);
-display_control.set_visibility_on_Nextion("t2",0);
-display_control.set_visibility_on_Nextion("b11", 0);
-logic_control.Load_Saved_Settings_Fans(); //  Load the existing settings for the fans only
-logic_control.load_saved_display_settings(); //load the existing settings for the display only
+  display_control.set_visibility_on_Nextion("t2", 0);
+  display_control.set_visibility_on_Nextion("b11", 0);
+ 
 
-pinMode(FP1, OUTPUT);
-pinMode(FP2, OUTPUT);
-pinMode(FP3, OUTPUT);
-pinMode(FP4, OUTPUT);
-pinMode(F1, OUTPUT);
-pinMode(F2, OUTPUT);
-pinMode(H1, OUTPUT);
-pinMode(H2, OUTPUT);
-pinMode(H3, OUTPUT);
-pinMode(fan_1_PWM_pin, OUTPUT);
-pinMode(fan_2_PWM_pin, OUTPUT);
-pinMode(valve_1_PWM_pin, OUTPUT);
-pinMode(Pressure1, INPUT_PULLDOWN);
-pinMode(Pressure2, INPUT_PULLDOWN);
+  pinMode(FP1, OUTPUT);
+  pinMode(FP2, OUTPUT);
+  pinMode(FP3, OUTPUT);
+  pinMode(FP4, OUTPUT);
+  pinMode(F1, OUTPUT);
+  pinMode(F2, OUTPUT);
+  pinMode(H1, OUTPUT);
+  pinMode(H2, OUTPUT);
+  pinMode(H3, OUTPUT);
+  pinMode(fan_1_PWM_pin, OUTPUT);
+  pinMode(fan_2_PWM_pin, OUTPUT);
+  pinMode(valve_1_PWM_pin, OUTPUT);
+  pinMode(Pressure1, INPUT_PULLDOWN);
+  pinMode(Pressure2, INPUT_PULLDOWN);
 
-digitalWrite(FP1, LOW);
-digitalWrite(FP2, LOW);
-digitalWrite(FP3, LOW);
-digitalWrite(FP4, LOW);
-digitalWrite(F1, LOW);
-digitalWrite(F2, LOW);
-digitalWrite(H1, LOW);
-digitalWrite(H2, LOW);
-digitalWrite(H3, LOW);
-
-/*A method for measuring the temperatures, setting up the display and populating the variables must be made*/
-
+  digitalWrite(FP1, LOW);
+  digitalWrite(FP2, LOW);
+  digitalWrite(FP3, LOW);
+  digitalWrite(FP4, LOW);
+  digitalWrite(F1, LOW);
+  digitalWrite(F2, LOW);
+  digitalWrite(H1, LOW);
+  digitalWrite(H2, LOW);
+  digitalWrite(H3, LOW);
+  
+  logic_control.Load_Saved_Settings_Fans();    //  Load the existing settings for the fans only
+  logic_control.load_saved_display_settings(); //load the existing settings for the display only
 } // end void setup
 
 void loop()
@@ -138,10 +137,10 @@ void loop()
     Serial.println("new_state_h1 : " + String(new_state_h1));
   }
 
-/*outData ="t0.txt=\"" + String("работи ли или не") + "\"";
+  /*outData ="t0.txt=\"" + String("работи ли или не") + "\"";
 display_control.sendDataToDisplay();
 delay(1000);*/
-//Serial.println("мога да говоря български");
+  //Serial.println("мога да говоря български");
   //check_time_for_execution(); //Measure the time needed to process everything once
 
 } // end void loop
