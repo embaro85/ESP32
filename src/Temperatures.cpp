@@ -2,9 +2,11 @@
 #include "Temperatures.h"
 #include "Display.h"
 #include "Heaters.h"
+#include "Nextion_commands.h"
 #include <Arduino.h>
 #include <DallasTemperature.h>
 #include <OneWire.h>
+
 
 DeviceAddress device_0, device_1, device_2, device_3, device_4, device_5;
 OneWire oneWire(temp_bus);           // Setup a oneWire instance to communicate with any OneWire devices
@@ -122,7 +124,7 @@ void Temperatures::measure_temperatures()
             //      Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_1, 1) + "°C");
             temperature_sensor++;
             outData = "Temperatures1.tt1.txt=\"" + String(T_1, 1) + "\"";
-            display_control.sendDataToDisplay();
+        nextion_commands.send_data_to_display();
         }
         else if (temperature_sensor == 2)
         {
@@ -131,7 +133,7 @@ void Temperatures::measure_temperatures()
             //    Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_2, 1) + "°C");
             temperature_sensor++;
             outData = "Temperatures1.tt2.txt=\"" + String(T_2, 1) + "\"";
-            display_control.sendDataToDisplay();
+        nextion_commands.send_data_to_display();
         }
         else if (temperature_sensor == 3)
         {
@@ -141,7 +143,7 @@ void Temperatures::measure_temperatures()
             //    Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_3, 1) + "°C");
             temperature_sensor++;
             outData = "Temperatures2.tt3.txt=\"" + String(T_3, 1) + "\"";
-            display_control.sendDataToDisplay();
+        nextion_commands.send_data_to_display();
         }
         else if (temperature_sensor == 4)
         {
@@ -151,8 +153,20 @@ void Temperatures::measure_temperatures()
             //   Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_4, 1) + "°C");
             temperature_sensor = 1;
             outData = "Temperatures2.tt4.txt=\"" + String(T_4, 1) + "\"";
-            display_control.sendDataToDisplay();
+        nextion_commands.send_data_to_display();
         }
+    }
+}
+
+void Temperatures::set_threshold_temperature_for_heaters_control()
+{
+    if (inData == "1")
+    {
+        threshhold_temperature++;
+    }
+    if (inData == "2")
+    {
+        threshhold_temperature--;
     }
 }
 

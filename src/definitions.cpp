@@ -41,7 +41,7 @@ unsigned long time_in_millis = 0;
 unsigned long elapsed_time_in_millis = 0;
 unsigned long timer_read_serial = 0;
 int read_serial_interval = 15000;
-String inData;  //main variable for incoming data from the display
+String inData; //main variable for incoming data from the display
 //int inData2;
 String outData; //main variable for outgoing data to the display
 bool f1_on_off_state;
@@ -110,8 +110,9 @@ String screen_lock_pin_string;
 const String master_pin = "9307";
 int display_screen_lock_period;
 String display_screen_lock_period_string;
-uint16_t number_of_tries=3;
-uint16_t number_of_tries_master_pin =3;
+uint16_t number_of_tries = 3;
+uint16_t number_of_tries_master_pin = 3;
+String master_pin_input;
 
 /////TEMPERATURES/////
 int temp_measure_interval = 100;
@@ -142,3 +143,10 @@ String p9_h0 = "h0.val=";
 String p9_c0 = "c0.val=";
 String p9_c1 = "c1.val=";
 String p13_n0 = "n0.val=";
+
+///incoming pre set commands from the nextion display///
+String turn_heater_on_temp_limit_plus = "1";    //increase the threshold temperature for turning the heaters on
+String turn_heater_on_temp_limit_minus = "2";   // decrease the threshold temperature for turning the heaters on
+String turn_unit_off_on_temp_limit_plus = "3";  // increase the threshold temperature for turning the unit off
+String turn_unit_off_on_temp_limit_minus = "4"; // decrease the threshold temperature for turning the unit off
+String go_to_page_set_temperatures = "set_temperatures";

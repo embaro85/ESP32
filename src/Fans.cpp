@@ -1,6 +1,7 @@
 #include "Display.h"
 #include "definitions.h"
 #include "Fans.h"
+#include "Nextion_commands.h"
 
 void turn_fan2_on_or_off(uint8_t fan_number, String on_or_off) //F1 or F2
 {
@@ -45,8 +46,8 @@ float Fans::fan1_control_voltage_up(String Nextion_Text_Field_f1, float f1_contr
     {
       f1_control_voltage += 0.1;
       outData = Nextion_Text_Field_f1 + String(f1_control_voltage, 1) + String(" V") + "\""; // generate string for the display
-      display_control.sendDataToDisplay();
       f1_calculate_pwm_value(f1_control_voltage);
+      nextion_commands.send_data_to_display();
       return f1_control_voltage;
     }
   }
@@ -60,7 +61,7 @@ float Fans::fan1_control_voltage_down(String Nextion_Text_Field_f1, float f1_con
     {
       f1_control_voltage -= 0.1;
       outData = Nextion_Text_Field_f1 + String(f1_control_voltage, 1) + String(" V") + "\""; // generate string for the display
-      display_control.sendDataToDisplay();
+      nextion_commands.send_data_to_display();
       f1_calculate_pwm_value(f1_control_voltage);
       return f1_control_voltage;
     }
@@ -112,7 +113,7 @@ float Fans::fan2_control_voltage_up(String Nextion_Text_Field_f2, float f2_contr
     {
       f2_control_voltage += 0.1;
       outData = Nextion_Text_Field_f2 + String(f2_control_voltage, 1) + String(" V") + "\"";
-      display_control.sendDataToDisplay();
+      nextion_commands.send_data_to_display();
       f2_calculate_pwm_value(f2_control_voltage);
       return f2_control_voltage;
     }
@@ -127,7 +128,7 @@ float Fans::fan2_control_voltage_down(String Nextion_Text_Field_f2, float f2_con
     {
       f2_control_voltage -= 0.1;
       outData = Nextion_Text_Field_f2 + String(f2_control_voltage, 1) + String(" V") + "\"";
-      display_control.sendDataToDisplay();
+      nextion_commands.send_data_to_display();
       f2_calculate_pwm_value(f2_control_voltage);
       return f2_control_voltage;
     }
