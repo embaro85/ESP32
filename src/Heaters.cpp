@@ -3,6 +3,7 @@
 #include "Heaters.h"
 #include "Display.h"
 #include "Temperatures.h"
+#include "Nextion_commands.h"
 
 //digitalWrite HIGH in another form for heater 1
 void h_turn_on(uint8_t heater_number)
@@ -42,21 +43,21 @@ void turn_heater_off(uint8_t heater_number)
         heater1_on_off_state = false;
         digitalWrite(heater_number, LOW);
         outData = "h3btn.val=" + String(heater1_on_off_state);
-        display_control.sendDataToDisplay();
+        nextion_commands.send_data_to_display();
     }
     if (heater_number == H2)
     {
         heater2_on_off_state = false;
         digitalWrite(heater_number, LOW);
         outData = "h3btn.val=" + String(heater2_on_off_state);
-        display_control.sendDataToDisplay();
+        nextion_commands.send_data_to_display();
     }
     if (heater_number == H3)
     {
         heater2_on_off_state = false;
         digitalWrite(heater_number, LOW);
         outData = "h3btn.val=" + String(heater3_on_off_state);
-        display_control.sendDataToDisplay();
+        nextion_commands.send_data_to_display();
     }
 }
 

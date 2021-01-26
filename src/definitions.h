@@ -119,6 +119,8 @@ extern int display_screen_lock_period;
 extern String display_screen_lock_period_string;
 extern uint16_t number_of_tries;
 extern uint16_t number_of_tries_master_pin;
+extern String master_pin_input;
+
 
 /////TEMPERATURES/////
 extern String h_manual_on_off;
@@ -149,3 +151,9 @@ extern String p9_c0;
 extern String p9_c1;
 extern String p13_n0;
 
+///incoming pre set commands from the nextion display///
+extern String turn_heater_on_temp_limit_plus;    //increase the threshold temperature for turning the heaters on
+extern String turn_heater_on_temp_limit_minus;   // decrease the threshold temperature for turning the heaters on
+extern String turn_unit_off_on_temp_limit_plus;  // increase the threshold temperature for turning the unit off
+extern String turn_unit_off_on_temp_limit_minus; // decrease the threshold temperature for turning the unit off
+extern String go_to_page_set_temperatures;

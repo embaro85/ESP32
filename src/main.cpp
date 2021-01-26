@@ -25,6 +25,7 @@
 #include "Temperatures.h"
 #include "Heaters.h"
 #include "Logic.h"
+#include "Nextion_commands.h"
 
 void read_DS18B20_temperatures_core_0(void *parameter)
 {
@@ -79,8 +80,8 @@ void setup()
     Serial.println("SPIFFS successfully loaded");
   }
   delay(100);
-  display_control.set_visibility_on_Nextion("t2", 0);
-  display_control.set_visibility_on_Nextion("b11", 0);
+  nextion_commands.set_visibility_on_Nextion("t2", 0);
+  nextion_commands.set_visibility_on_Nextion("b11", 0);
  
 
   pinMode(FP1, OUTPUT);
@@ -116,7 +117,7 @@ void loop()
 {
   time_in_millis = millis(); //needed for void checkTimeForExecution () must stay
   inData = "0";
-  display_control.receive_data_from_display();
+  nextion_commands.receive_data_from_display();
   logic_control.check_and_save_data_Fans();
   logic_control.check_and_save_data_display_settings();
   fan1_0_10_voltage_input = fans_control.fan1_control_voltage_up(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f1_plus_cmd);
@@ -137,10 +138,6 @@ void loop()
     Serial.println("new_state_h1 : " + String(new_state_h1));
   }
 
-  /*outData ="t0.txt=\"" + String("работи ли или не") + "\"";
-display_control.sendDataToDisplay();
-delay(1000);*/
-  //Serial.println("мога да говоря български");
-  //check_time_for_execution(); //Measure the time needed to process everything once
+ 
 
 } // end void loop

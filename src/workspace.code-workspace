@@ -3,6 +3,10 @@
 		{
 			"name": "AHU_controller_V0.1",
 			"path": ".."
+		},
+		{
+			"name": "test",
+			"path": "..\\..\\test"
 		}
 	],
 	"settings": {
