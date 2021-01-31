@@ -82,7 +82,6 @@ void setup()
   delay(100);
   nextion_commands.set_visibility_on_Nextion("t2", 0);
   nextion_commands.set_visibility_on_Nextion("b11", 0);
- 
 
   pinMode(FP1, OUTPUT);
   pinMode(FP2, OUTPUT);
@@ -108,7 +107,7 @@ void setup()
   digitalWrite(H1, LOW);
   digitalWrite(H2, LOW);
   digitalWrite(H3, LOW);
-  
+
   logic_control.Load_Saved_Settings_Fans();    //  Load the existing settings for the fans only
   logic_control.load_saved_display_settings(); //load the existing settings for the display only
 } // end void setup
@@ -118,19 +117,17 @@ void loop()
   time_in_millis = millis(); //needed for void checkTimeForExecution () must stay
   inData = "0";
   nextion_commands.receive_data_from_display();
-  logic_control.check_and_save_data_Fans();
-  logic_control.check_and_save_data_display_settings();
   fan1_0_10_voltage_input = fans_control.fan1_control_voltage_up(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f1_plus_cmd);
   fan1_0_10_voltage_input = fans_control.fan1_control_voltage_down(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f1_minus_cmd);
   fans_control.fan1_control_on_off();
   fan2_0_10_voltage_input = fans_control.fan2_control_voltage_up(f2_Nextion_Text_Field, fan2_0_10_voltage_input, f2_plus_cmd);
   fan2_0_10_voltage_input = fans_control.fan2_control_voltage_down(f2_Nextion_Text_Field, fan2_0_10_voltage_input, f2_minus_cmd);
   fans_control.fan2_control_on_off();
-  display_control.Refresh_Fans_Screen(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f2_Nextion_Text_Field, fan2_0_10_voltage_input, ref_fans_screen_cmd);
   heaters_control.heaters_temperature_contol();
   heaters_control.heaters_manual_control();
-  display_control.menu_navigation_Nextion();
-  display_control.display_settings_menu();
+  display_control.working_stream();
+  logic_control.working_stream();
+
   if (inData == "info")
   {
     Serial.println("Heater1 state is: " + String(heater1_on_off_state));
@@ -138,6 +135,5 @@ void loop()
     Serial.println("new_state_h1 : " + String(new_state_h1));
   }
 
- 
-
+  //Serial.println(outData);
 } // end void loop

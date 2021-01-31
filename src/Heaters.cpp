@@ -64,7 +64,7 @@ void turn_heater_off(uint8_t heater_number)
 // switch on/off state of heater 1 according to a set temperature
 void h1_temperature_control()
 {
-    if (T_2 < threshhold_temperature && h_manual_control_state_new == false && heater1_on_off_state == false)
+    if (T_2 < threshold_temperature && h_manual_control_state_new == false && heater1_on_off_state == false)
     {
         heater1_on_off_state = true;
         Serial.print("Heater 1 state changed to ");
@@ -73,7 +73,7 @@ void h1_temperature_control()
         h_turn_on(H1);
         display_control.refresh_heaters_screen();
     }
-    else if (T_2 > threshhold_temperature && h_manual_control_state_new == false && heater1_on_off_state == true)
+    else if (T_2 > threshold_temperature && h_manual_control_state_new == false && heater1_on_off_state == true)
     {
         heater1_on_off_state = false;
         Serial.print("Heater 1 state changed to ");
@@ -153,6 +153,13 @@ void Heaters::heaters_manual_control()
         turn_heater_off(H3);
         heater3_on_off_state = false;
     }
+}
+
+void Heaters::turn_heaters_off()
+{
+heater1_on_off_state = false;
+heater2_on_off_state = false;
+heater3_on_off_state = false;
 }
 
 Heaters heaters_control;

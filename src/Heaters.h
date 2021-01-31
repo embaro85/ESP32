@@ -14,8 +14,7 @@ public:
     void h3_state();
     void heaters_temperature_contol(); //unifies the methods for the heaters
     void heaters_manual_control();
-
-
+    void turn_heaters_off();
 };
 
 extern Heaters heaters_control;

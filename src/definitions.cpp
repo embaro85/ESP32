@@ -128,7 +128,8 @@ String h3_manual_off = "h3_off";
 String h1_Nextion_Text_Field = "th1.txt=\"";
 String h2_Nextion_Text_Field = "th2.txt=\"";
 String h3_Nextion_Text_Field = "th3.txt=\"";
-byte threshhold_temperature = 27;
+uint8_t threshold_temperature = 27;
+uint8_t turn_everything_off_temperature_threshold = 100;
 
 /////HEATERS/////
 bool new_state_h1 = true;
@@ -150,3 +151,6 @@ String turn_heater_on_temp_limit_minus = "2";   // decrease the threshold temper
 String turn_unit_off_on_temp_limit_plus = "3";  // increase the threshold temperature for turning the unit off
 String turn_unit_off_on_temp_limit_minus = "4"; // decrease the threshold temperature for turning the unit off
 String go_to_page_set_temperatures = "set_temperatures";
+String info_button_push_p10_t4 = "5"; // display the additional information
+String turn_off_info_text_p10_t5_and_t6 ="6";
+String info_button_push_p10_t7 = "7"; // display the additional information

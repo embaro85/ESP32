@@ -10,6 +10,7 @@ public:
     float fan2_control_voltage_up(String Nextion_Text_Field_f2, float f2_control_voltage, String cmd);
     float fan2_control_voltage_down(String Nextion_Text_Field_f2, float f2_control_voltage, String cmd);
     void fan2_control_on_off();
+    void turn_fans_off();
 };
 
 extern Fans fans_control;
