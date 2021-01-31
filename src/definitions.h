@@ -121,7 +121,6 @@ extern uint16_t number_of_tries;
 extern uint16_t number_of_tries_master_pin;
 extern String master_pin_input;
 
-
 /////TEMPERATURES/////
 extern String h_manual_on_off;
 extern bool h_manual_control_state_new;
@@ -135,7 +134,9 @@ extern String h2_manual_off;
 extern String h1_Nextion_Text_Field;
 extern String h2_Nextion_Text_Field;
 extern String h3_Nextion_Text_Field;
-extern byte threshhold_temperature;
+extern uint8_t threshold_temperature;
+extern uint8_t turn_everything_off_temperature_threshold;
+
 
 /////HEATERS/////
 extern bool new_state_h1;
@@ -157,3 +158,7 @@ extern String turn_heater_on_temp_limit_minus;   // decrease the threshold tempe
 extern String turn_unit_off_on_temp_limit_plus;  // increase the threshold temperature for turning the unit off
 extern String turn_unit_off_on_temp_limit_minus; // decrease the threshold temperature for turning the unit off
 extern String go_to_page_set_temperatures;
+extern String info_button_push_p10_t4; // display the additional information
+extern String turn_off_info_text_p10_t5_and_t6;
+extern String info_button_push_p10_t7; // display the additional information
+

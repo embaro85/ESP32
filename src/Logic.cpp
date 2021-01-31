@@ -4,6 +4,8 @@
 #include <SPIFFS.h>
 #include "Logic.h"
 #include "Temperatures.h"
+#include "Fans.h"
+#include "Heaters.h"
 
 /*
 loads the saved settings in the SPIFFS for the fans.
@@ -110,5 +112,28 @@ void Logic::check_and_save_data_display_settings()
     old_display_settings = new_display_settings;
   }
 } //end function
+
+
+bool Logic::turn_everything_off ()
+{
+  if (T2 < turn_everything_off_temperature_threshold)
+  {
+    fans_control.turn_fans_off();
+    heaters_control.turn_heaters_off();
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+  
+}
+
+void Logic::working_stream()
+{
+  logic_control.check_and_save_data_display_settings();
+  logic_control.check_and_save_data_Fans();
+ // logic_control.turn_everything_off();
+}
 
 Logic logic_control;

@@ -151,4 +151,10 @@ void Fans::fan2_control_on_off()
   }
 };
 
+void Fans::turn_fans_off()
+{
+f1_on_off_state = false;
+f2_on_off_state = false;
+}
+
 Fans fans_control;

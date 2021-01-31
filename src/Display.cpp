@@ -250,7 +250,23 @@ void Display::menu_navigation_Nextion()
     if (inData == go_to_page_set_temperatures)
     {
         nextion_commands.go_to_page_Nextion(10);
-
+        display_control.refresh_temperature_settings_screen();
+    }
+    if (inData == info_button_push_p10_t4)
+    {
+        nextion_commands.set_visibility_on_Nextion("t5", 1);
+        nextion_commands.set_visibility_on_Nextion("b2", 1);
+    }
+    if (inData == turn_off_info_text_p10_t5_and_t6)
+    {
+        nextion_commands.set_visibility_on_Nextion("t5", 0);
+        nextion_commands.set_visibility_on_Nextion("t6", 0);
+        nextion_commands.set_visibility_on_Nextion("b2", 0);
+    }
+    if (inData == info_button_push_p10_t7)
+    {
+        nextion_commands.set_visibility_on_Nextion ("t6", 1);
+        nextion_commands.set_visibility_on_Nextion("b2", 1);
     }
 }
 void Display::refresh_heaters_screen()
@@ -481,7 +497,7 @@ void Display::compare_screen_lock_pin()
             nextion_commands.set_visibility_on_Nextion("t2", 1);
             delay(2000);
             nextion_commands.set_visibility_on_Nextion("t2", 0);
-            nextion_commands.set_visibility_on_Nextion("b11",0);
+            nextion_commands.set_visibility_on_Nextion("b11", 0);
             nextion_commands.set_visibility_on_Nextion("t3", 1);
             nextion_commands.set_visibility_on_Nextion("n0", 1);
             outData = "n0.val=" + String(number_of_tries);
@@ -526,6 +542,37 @@ void Display::unlock_screen_with_master_pin()
         }
     }
 }
+void Display::send_threshold_temperature_to_screen_field()
+{
+    if (!temperatures_control.handle_threshold_temperature())
+    {
+        outData = "t1.txt=\"" + String(threshold_temperature) + "\"";
+        nextion_commands.send_data_to_display();
+    }
+}
+void Display::send_everything_off_threshold_temperature_to_screen_field()
+{
+    if (!temperatures_control.handle_everything_off_threshold_temperature())
+    {
+        outData = "t3.txt=\"" + String(turn_everything_off_temperature_threshold) + "\"";
+        nextion_commands.send_data_to_display();
+    }
+}
+void Display::refresh_temperature_settings_screen()
+{
+    outData = "t1.txt=\"" + String(threshold_temperature) + "\"";
+    nextion_commands.send_data_to_display();
+    outData = "t3.txt=\"" + String(turn_everything_off_temperature_threshold) + "\"";
+    nextion_commands.send_data_to_display();
+}
 
+void Display::working_stream()
+{
+    display_control.menu_navigation_Nextion();
+    display_control.display_settings_menu();
+    display_control.send_threshold_temperature_to_screen_field();
+    display_control.send_everything_off_threshold_temperature_to_screen_field();
+    display_control.Refresh_Fans_Screen(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f2_Nextion_Text_Field, fan2_0_10_voltage_input, ref_fans_screen_cmd);
+}
 
 Display display_control;

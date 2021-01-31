@@ -14,5 +14,9 @@ public:
     void display_settings_menu();
     void calculate_auto_off_period();
     void unlock_screen_with_master_pin();
+    void send_threshold_temperature_to_screen_field();
+    void send_everything_off_threshold_temperature_to_screen_field();
+    void refresh_temperature_settings_screen();
+    void working_stream();
 };
 extern Display display_control;
