@@ -42,10 +42,10 @@ float Fans::fan1_control_voltage_up(String Nextion_Text_Field_f1, float f1_contr
   if (cmd == inData)
   {
     // incerase fan 1 voltage
-    if (f1_control_voltage <= 10.0)
+    if (f1_control_voltage <= 9.9)
     {
       f1_control_voltage += 0.1;
-      outData = Nextion_Text_Field_f1 + String(f1_control_voltage, 1) + String(" V") + "\""; // generate string for the display
+      outData = Nextion_Text_Field_f1 + String(f1_control_voltage*10, 0) + String("%") + "\""; // generate string for the display
       f1_calculate_pwm_value(f1_control_voltage);
       nextion_commands.send_data_to_display();
       return f1_control_voltage;
@@ -60,7 +60,7 @@ float Fans::fan1_control_voltage_down(String Nextion_Text_Field_f1, float f1_con
     if (f1_control_voltage >= 0.1)
     {
       f1_control_voltage -= 0.1;
-      outData = Nextion_Text_Field_f1 + String(f1_control_voltage, 1) + String(" V") + "\""; // generate string for the display
+      outData = Nextion_Text_Field_f1 + String(f1_control_voltage*10, 0) + String("%") + "\""; // generate string for the display
       nextion_commands.send_data_to_display();
       f1_calculate_pwm_value(f1_control_voltage);
       return f1_control_voltage;
@@ -71,16 +71,12 @@ float Fans::fan1_control_voltage_down(String Nextion_Text_Field_f1, float f1_con
 void Fans::fan1_control_on_off()
 {
   if (inData == "f1_on")
-  { // toggle ON/OFF fan1
-    digitalWrite(F1, HIGH);
-    f1_on_off_state = true;
-    Serial.println("Fan 1 is ON");
+  {
+    fans_control.turn_fan_1_on();
   }
   else if (inData == "f1_off")
   {
-    digitalWrite(F1, LOW);
-    f1_on_off_state = false;
-    Serial.println("Fan 1 is OFF");
+    fans_control.turn_fan_1_off();
   }
 }
 
@@ -109,10 +105,10 @@ float Fans::fan2_control_voltage_up(String Nextion_Text_Field_f2, float f2_contr
 
   if (cmd == inData)
   { // increase fan 2 voltage
-    if (f2_control_voltage <= 10.0)
+    if (f2_control_voltage <= 9.9)
     {
       f2_control_voltage += 0.1;
-      outData = Nextion_Text_Field_f2 + String(f2_control_voltage, 1) + String(" V") + "\"";
+      outData = Nextion_Text_Field_f2 + String(f2_control_voltage*10, 0) + String("%") + "\"";
       nextion_commands.send_data_to_display();
       f2_calculate_pwm_value(f2_control_voltage);
       return f2_control_voltage;
@@ -127,7 +123,7 @@ float Fans::fan2_control_voltage_down(String Nextion_Text_Field_f2, float f2_con
     if (f2_control_voltage >= 0.1)
     {
       f2_control_voltage -= 0.1;
-      outData = Nextion_Text_Field_f2 + String(f2_control_voltage, 1) + String(" V") + "\"";
+      outData = Nextion_Text_Field_f2 + String(f2_control_voltage*10, 0) + String("%") + "\"";
       nextion_commands.send_data_to_display();
       f2_calculate_pwm_value(f2_control_voltage);
       return f2_control_voltage;
@@ -139,22 +135,46 @@ void Fans::fan2_control_on_off()
 {
   if (inData == "f2_on")
   {
-    digitalWrite(F2, HIGH);
-    f2_on_off_state = true;
-    Serial.println("Fan 2 is ON");
+    fans_control.turn_fan_2_on();
   }
   else if (inData == "f2_off")
   {
-    digitalWrite(F2, LOW);
-    f2_on_off_state = false;
-    Serial.println("Fan 2 is OFF");
+    fans_control.turn_fan_2_off();
   }
 };
 
+void Fans::turn_fan_1_on()
+{
+  digitalWrite(F1, HIGH);
+  f1_on_off_state = true;
+  Serial.println("Fan 1 is ON");
+}
+
+void Fans::turn_fan_1_off()
+{
+  digitalWrite(F1, LOW);
+  f1_on_off_state = false;
+  Serial.println("Fan 1 is OFF");
+}
+
+void Fans::turn_fan_2_on()
+{
+  digitalWrite(F2, HIGH);
+  f2_on_off_state = true;
+  Serial.println("Fan 2 is ON");
+}
+
+void Fans::turn_fan_2_off()
+{
+  digitalWrite(F2, LOW);
+  f2_on_off_state = false;
+  Serial.println("Fan 2 is OFF");
+}
+
 void Fans::turn_fans_off()
 {
-f1_on_off_state = false;
-f2_on_off_state = false;
+  f1_on_off_state = false;
+  f2_on_off_state = false;
 }
 
 Fans fans_control;

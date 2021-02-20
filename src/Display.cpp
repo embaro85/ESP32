@@ -4,6 +4,21 @@
 #include "Heaters.h"
 #include "Logic.h"
 #include "Nextion_commands.h"
+#include "Settings.h"
+#include "Overview.h"
+#include "Temperature_settings.h"
+
+void Display::working_stream()
+{
+    display_control.menu_navigation_Nextion();
+    display_control.display_settings_menu();
+    display_control.send_threshold_temperature_to_screen_field();
+    display_control.send_everything_off_threshold_temperature_to_screen_field();
+    display_control.send_h1_power_to_screen_field();
+    display_control.send_h2_power_to_screen_field();
+    display_control.send_h3_power_to_screen_field();
+}
+
 //switches only the button value and text on the display, not the heater itself.
 void h1_switch_Nextion_btn_on_or_off(String switch_on_or_off)
 {
@@ -97,90 +112,55 @@ void set_properties_page_manual_control()
 
     Serial.println(outData);
 }
-// set the heaters temperature control page button states and text fields
-void set_properties_page_temperature_control()
-{
 
-    if (heater1_on_off_state == true)
-    {
-        outData = "Heaters1.th1.txt=\"" + String("включен") + "\"";
-        nextion_commands.send_data_to_display();
-    }
-    else if (heater1_on_off_state == false)
-    {
-        outData = "Heaters1.th1.txt=\"" + String("OFF") + "\"";
-        nextion_commands.send_data_to_display();
-    }
-    else if (heater2_on_off_state == true)
-    {
-        outData = "Heaters1.th2.txt=\"" + String("ON") + "\"";
-        nextion_commands.send_data_to_display();
-    }
-    else if (heater2_on_off_state == false)
-    {
-        outData = "Heaters1.th2.txt=\"" + String("OFF") + "\"";
-        nextion_commands.send_data_to_display();
-    }
-    else if (heater3_on_off_state == true)
-    {
-        outData = "Heaters1.th3.txt=\"" + String("ON") + "\"";
-        nextion_commands.send_data_to_display();
-    }
-    else if (heater3_on_off_state == false)
-    {
-        outData = "Heaters1.th3.txt=\"" + String("OFF") + "\"";
-        nextion_commands.send_data_to_display();
-    }
-    outData = "Heaters1.bhmanual.val=" + String(h_manual_control_state_new); // set the check button to unchecked
+void Display::Refresh_Fans_Screen()
+{
+    outData = p6_tf1 + String(fan1_0_10_voltage_input * 10, 0) + String(" %") + "\"";
     nextion_commands.send_data_to_display();
-}
-
-void Display::Refresh_Fans_Screen(String Nextion_Text_Field_f1, float f1_control_voltage, String Nextion_Text_Field_f2, float f2_control_voltage, String ref_fans_screen_cmd)
-{
-    if (ref_fans_screen_cmd == inData)
-    {
-        nextion_commands.go_to_page_Nextion(6);
-        outData = Nextion_Text_Field_f1 + String(f1_control_voltage, 1) + String(" V") + "\"";
-        nextion_commands.send_data_to_display();
-        Serial.println(outData);
-        outData = Nextion_Text_Field_f2 + String(f2_control_voltage, 1) + String(" V") + "\"";
-        nextion_commands.send_data_to_display();
-        nextion_commands.set_value_of_screen_component("bt0", f1_on_off_state);
-        Serial.println("Fan 1 state is: " + String(f1_on_off_state));
-        nextion_commands.set_value_of_screen_component("bt1", f2_on_off_state);
-        Serial.println("Fan 2 state is: " + String(f2_on_off_state));
-    }
+    outData = p6_tf2 + String(fan2_0_10_voltage_input * 10, 0) + String(" %") + "\"";
+    nextion_commands.send_data_to_display();
+    nextion_commands.set_value_of_screen_component(p6_bt0_value, f1_on_off_state);
+    Serial.println("Fan 1 state is: " + String(f1_on_off_state));
+    nextion_commands.set_value_of_screen_component(p6_bt1_value, f2_on_off_state);
+    Serial.println("Fan 2 state is: " + String(f2_on_off_state));
+    Serial.println(f1_on_off_state);
+    Serial.println(f2_on_off_state);
 }
 
 void Display::menu_navigation_Nextion()
 {
     if (inData == "f_m")
     {
-        // go_to_page_Nextion(6);
+        nextion_commands.go_to_page_Nextion(6);
+        display_control.Refresh_Fans_Screen();
     }
-    if (inData == "t_m")
+    if (inData == go_to_page_temperatures_p4)
     {
         nextion_commands.go_to_page_Nextion(4);
+        on_page_4 = true;
     }
-    if (inData == "t_m_1")
+    if (inData == go_to_page_temperatures_p5)
     {
         nextion_commands.go_to_page_Nextion(5);
     }
-    if (inData == "h_m")
+    if (inData == go_to_page_heaters_p2)
     {
-        if (h_manual_control_state_new == true)
+        nextion_commands.go_to_page_Nextion(2);
+        on_page_2 = true;
+        /*if (h_manual_control_state_new == true)
         {
             nextion_commands.go_to_page_Nextion(3);
-            set_properties_page_manual_control();
+           heaters_control.resfresh_page();
+            //set_properties_page_manual_control();
         }
         else if (h_manual_control_state_new == false)
         {
             nextion_commands.go_to_page_Nextion(2);
-            set_properties_page_temperature_control();
-        }
-        Serial.println(outData);
+            //set_properties_page_temperature_control();
+            heaters_control.resfresh_page();
+        }*/
     }
-    if (inData == "h_man_on") //navigates to warning page
+    if (inData == go_to_page_heaters_warning_p8) //navigates to warning page
     {
         nextion_commands.go_to_page_Nextion(8);
     }
@@ -217,7 +197,8 @@ void Display::menu_navigation_Nextion()
     {
         h_manual_control_state_new = false;
         nextion_commands.go_to_page_Nextion(2);
-        set_properties_page_temperature_control();
+        //set_properties_page_temperature_control();
+        heaters_control.resfresh_page();
     }
     if (inData == "s_m")
     {
@@ -247,32 +228,42 @@ void Display::menu_navigation_Nextion()
     {
         nextion_commands.go_to_page_Nextion(13);
     }
-    if (inData == go_to_page_set_temperatures)
+    if (inData == go_to_page_set_temperatures_p10)
     {
         nextion_commands.go_to_page_Nextion(10);
-        display_control.refresh_temperature_settings_screen();
+        temperature_settings_control.refresh_screen();
     }
     if (inData == info_button_push_p10_t4)
     {
         nextion_commands.set_visibility_on_Nextion("t5", 1);
-        nextion_commands.set_visibility_on_Nextion("b2", 1);
+        nextion_commands.set_visibility_on_Nextion("b2", 0);
     }
     if (inData == turn_off_info_text_p10_t5_and_t6)
     {
         nextion_commands.set_visibility_on_Nextion("t5", 0);
         nextion_commands.set_visibility_on_Nextion("t6", 0);
-        nextion_commands.set_visibility_on_Nextion("b2", 0);
+        //   nextion_commands.set_visibility_on_Nextion("b2", 0);
     }
     if (inData == info_button_push_p10_t7)
     {
-        nextion_commands.set_visibility_on_Nextion ("t6", 1);
-        nextion_commands.set_visibility_on_Nextion("b2", 1);
+        nextion_commands.set_visibility_on_Nextion("t6", 1);
+        nextion_commands.set_visibility_on_Nextion("b2", 0);
+    }
+    if (inData == go_to_heaters_settings_page_p14)
+    {
+        nextion_commands.go_to_page_Nextion(14);
+    }
+    if (inData == p7_b6_command)
+    {
+        nextion_commands.go_to_page_Nextion(15);
+        on_page_15 = true;
     }
 }
 void Display::refresh_heaters_screen()
 {
     h_manual_control_state_new = false;
-    set_properties_page_temperature_control();
+    //set_properties_page_temperature_control();
+    heaters_control.resfresh_page();
 }
 void Display::calculate_auto_off_period()
 {
@@ -546,33 +537,70 @@ void Display::send_threshold_temperature_to_screen_field()
 {
     if (!temperatures_control.handle_threshold_temperature())
     {
-        outData = "t1.txt=\"" + String(threshold_temperature) + "\"";
+        outData = p10_t1 + String(threshold_temperature) + "\"";
         nextion_commands.send_data_to_display();
+        nextion_commands.set_visibility_on_Nextion("t5", 0);
+        nextion_commands.set_visibility_on_Nextion("t6", 0);
+        nextion_commands.set_visibility_on_Nextion("b3", 1);
     }
 }
 void Display::send_everything_off_threshold_temperature_to_screen_field()
 {
     if (!temperatures_control.handle_everything_off_threshold_temperature())
     {
-        outData = "t3.txt=\"" + String(turn_everything_off_temperature_threshold) + "\"";
+        outData = p10_t3 + String(turn_everything_off_temperature_threshold) + "\"";
         nextion_commands.send_data_to_display();
+        nextion_commands.set_visibility_on_Nextion("t5", 0);
+        nextion_commands.set_visibility_on_Nextion("t6", 0);
+        nextion_commands.set_visibility_on_Nextion("b2", 1);
     }
 }
-void Display::refresh_temperature_settings_screen()
-{
-    outData = "t1.txt=\"" + String(threshold_temperature) + "\"";
-    nextion_commands.send_data_to_display();
-    outData = "t3.txt=\"" + String(turn_everything_off_temperature_threshold) + "\"";
-    nextion_commands.send_data_to_display();
-}
 
-void Display::working_stream()
+void Display::send_h1_power_to_screen_field()
 {
-    display_control.menu_navigation_Nextion();
-    display_control.display_settings_menu();
-    display_control.send_threshold_temperature_to_screen_field();
-    display_control.send_everything_off_threshold_temperature_to_screen_field();
-    display_control.Refresh_Fans_Screen(f1_Nextion_Text_Field, fan1_0_10_voltage_input, f2_Nextion_Text_Field, fan2_0_10_voltage_input, ref_fans_screen_cmd);
+    float _h1_power = h1_power;
+    settings_control.increase_decrease_heater_1_power();
+    if (_h1_power != h1_power)
+    {
+        outData = "t3.txt=\"" + String(h1_power) + "kW" + "\"";
+        nextion_commands.send_data_to_display();
+        Serial.println("Heater 1 power is: " + String(h1_power));
+    }
+}
+void Display::send_h2_power_to_screen_field()
+{
+    float _h2_power = h2_power;
+    settings_control.increase_decrease_heater_2_power();
+    if (_h2_power != h2_power)
+    {
+        outData = "t4.txt=\"" + String(h2_power) + "kW" + "\"";
+        nextion_commands.send_data_to_display();
+        Serial.println("Heater 2 power is: " + String(h2_power));
+    }
+}
+void Display::send_h3_power_to_screen_field()
+{
+    float _h3_power = h3_power;
+    settings_control.increase_decrease_heater_3_power();
+    if (_h3_power != h3_power)
+    {
+        outData = "t5.txt=\"" + String(h3_power) + "kW" + "\"";
+        nextion_commands.send_data_to_display();
+        Serial.println("Heater 3 power is: " + String(h3_power));
+    }
+}
+void Display::refresh_heaters_settings_screen()
+{
+    outData = "t3.txt=\"" + String(h1_power) + "kW" + "\"";
+    nextion_commands.send_data_to_display();
+    Serial.println("yes");
+    outData = "t4.txt=\"" + String(h2_power) + "kW" + "\"";
+    nextion_commands.send_data_to_display();
+    outData = "t5.txt=\"" + String(h3_power) + "kW" + "\"";
+    nextion_commands.send_data_to_display();
+    nextion_commands.set_value_of_screen_component(p14_c0, h1_available);
+    nextion_commands.set_value_of_screen_component(p14_c1, h2_available);
+    nextion_commands.set_value_of_screen_component(p14_c2, h3_available);
 }
 
 Display display_control;

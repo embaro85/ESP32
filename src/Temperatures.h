@@ -14,6 +14,13 @@ public:
     uint8_t set_everything_off_threshold_temperature();
     boolean handle_threshold_temperature();
     boolean handle_everything_off_threshold_temperature();
+    void save_temperature_settings_heaters_control();
+    void save_temperature_settings_turn_everything_on_off();
+    void working_stream();
+    void hide_start_info_text_t0();
+    void clean_temperature_fields();
+    void refresh_screen();
+    void exit_page();
 };
 
 extern Temperatures temperatures_control;
