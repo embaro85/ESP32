@@ -27,7 +27,7 @@ void Nextion_commands::set_value_of_screen_component(String nextion_component, u
     nextion_commands.send_data_to_display();
 }
 
-void Nextion_commands::set_text_of_screen_component (String nextion_component, uint16_t variable)
+void Nextion_commands::set_text_of_screen_component (String nextion_component, String variable)
 {
     outData = nextion_component + String (variable) + "\"";
     nextion_commands.send_data_to_display();
@@ -36,6 +36,7 @@ void Nextion_commands::set_text_of_screen_component (String nextion_component, u
 void Nextion_commands::send_data_to_display()
 { //send data to display
     Serial2.print(outData);
+    Serial.println(outData);
     Serial2.write(0xff);
     Serial2.write(0xff);
     Serial2.write(0xff);

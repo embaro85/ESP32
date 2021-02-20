@@ -3,6 +3,7 @@
 #include "Display.h"
 #include "Heaters.h"
 #include "Nextion_commands.h"
+#include "Logic.h"
 #include <Arduino.h>
 #include <DallasTemperature.h>
 #include <OneWire.h>
@@ -10,6 +11,14 @@
 DeviceAddress device_0, device_1, device_2, device_3, device_4, device_5;
 OneWire oneWire(temp_bus);           // Setup a oneWire instance to communicate with any OneWire devices
 DallasTemperature DS18B20(&oneWire); // Pass our oneWire reference to Dallas Temperature sensor
+
+void Temperatures::working_stream()
+{
+    temperatures_control.save_temperature_settings_heaters_control();
+    temperatures_control.save_temperature_settings_turn_everything_on_off();
+    temperatures_control.refresh_screen();
+    temperatures_control.exit_page();
+}
 
 void printAddress(DeviceAddress deviceAddress)
 {
@@ -122,8 +131,6 @@ void Temperatures::measure_temperatures()
             T_1 = DS18B20.getTempCByIndex(0);
             //      Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_1, 1) + "°C");
             temperature_sensor++;
-            outData = "Temperatures1.tt1.txt=\"" + String(T_1, 1) + "\"";
-            nextion_commands.send_data_to_display();
         }
         else if (temperature_sensor == 2)
         {
@@ -131,8 +138,6 @@ void Temperatures::measure_temperatures()
             T_2 = DS18B20.getTempCByIndex(1);
             //    Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_2, 1) + "°C");
             temperature_sensor++;
-            outData = "Temperatures1.tt2.txt=\"" + String(T_2, 1) + "\"";
-            nextion_commands.send_data_to_display();
         }
         else if (temperature_sensor == 3)
         {
@@ -141,8 +146,6 @@ void Temperatures::measure_temperatures()
             T_3 = DS18B20.getTempCByIndex(2);
             //    Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_3, 1) + "°C");
             temperature_sensor++;
-            outData = "Temperatures2.tt3.txt=\"" + String(T_3, 1) + "\"";
-            nextion_commands.send_data_to_display();
         }
         else if (temperature_sensor == 4)
         {
@@ -151,19 +154,17 @@ void Temperatures::measure_temperatures()
             T_4 = DS18B20.getTempCByIndex(3);
             //   Serial.println("Temperature sensor " + String(temperature_sensor) + " reading is: " + String(T_4, 1) + "°C");
             temperature_sensor = 1;
-            outData = "Temperatures2.tt4.txt=\"" + String(T_4, 1) + "\"";
-            nextion_commands.send_data_to_display();
         }
     }
 }
 
 uint8_t Temperatures::set_threshold_temperature_for_heaters_control()
 {
-    if (inData == "1")
+    if (inData == p10_b5_command)
     {
         threshold_temperature++;
     }
-    if (inData == "2")
+    if (inData == p10_b6_command && threshold_temperature > 2)
     {
         threshold_temperature--;
     }
@@ -172,18 +173,16 @@ uint8_t Temperatures::set_threshold_temperature_for_heaters_control()
 
 uint8_t Temperatures::set_everything_off_threshold_temperature()
 {
-    if (inData == "3")
+    if (inData == p10_b1_command)
     {
         turn_everything_off_temperature_threshold++;
     }
-    if (inData == "4" && turn_everything_off_temperature_threshold >2)
+    if (inData == p10_b0_command && turn_everything_off_temperature_threshold > 2)
     {
         turn_everything_off_temperature_threshold--;
     }
     return turn_everything_off_temperature_threshold;
 }
-
-
 
 boolean Temperatures::handle_threshold_temperature()
 {
@@ -205,6 +204,61 @@ boolean Temperatures::handle_everything_off_threshold_temperature()
     }
 }
 
+void Temperatures::hide_start_info_text_t0()
+{
+    if (inData == p10_b2_command)
+    {
+        nextion_commands.set_visibility_on_Nextion("t0", 0);
+    }
+}
 
+void Temperatures::save_temperature_settings_heaters_control()
+{
+    if (inData == p10_b3_command)
+    {
+        turn_everything_off_temperature_threshold_saved = turn_everything_off_temperature_threshold;
+        threshold_temperature_saved = threshold_temperature;
+        logic_control.check_and_save_data_temperature_settings();
+        nextion_commands.set_visibility_on_Nextion("t8", 1);
+        delay(2000);
+        nextion_commands.set_visibility_on_Nextion("t8", 0);
+        nextion_commands.go_to_page_Nextion(1);
+    }
+}
+
+void Temperatures::save_temperature_settings_turn_everything_on_off()
+{
+    if (inData == p10_b2_command)
+    {
+        turn_everything_off_temperature_threshold_saved = turn_everything_off_temperature_threshold;
+        threshold_temperature_saved = threshold_temperature;
+        logic_control.check_and_save_data_temperature_settings();
+        nextion_commands.set_visibility_on_Nextion("t8", 1);
+        delay(2000);
+        nextion_commands.set_visibility_on_Nextion("t8", 0);
+        nextion_commands.go_to_page_Nextion(1);
+    }
+}
+
+void Temperatures::refresh_screen()
+{
+    if (millis() > (2000 + timer3) && on_page_4 == true)
+    {
+        timer3 = millis();
+        nextion_commands.set_text_of_screen_component(p4_tt1, String(T_1, 1));
+        nextion_commands.set_text_of_screen_component(p4_tt2, String(T_2, 1));
+        nextion_commands.set_text_of_screen_component(p4_tt3, String(T_3, 1));
+        nextion_commands.set_text_of_screen_component(p4_tt4, String(T_4, 1));
+    }
+}
+
+void Temperatures::exit_page()
+{
+    if (inData == p4_b2_command)
+    {
+        on_page_4 = false;
+        nextion_commands.go_to_page_Nextion(1);
+    }
+}
 
 Temperatures temperatures_control;

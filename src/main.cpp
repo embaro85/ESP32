@@ -26,6 +26,9 @@
 #include "Heaters.h"
 #include "Logic.h"
 #include "Nextion_commands.h"
+#include "Settings.h"
+#include "Overview.h"
+#include "Temperature_settings.h"
 
 void read_DS18B20_temperatures_core_0(void *parameter)
 {
@@ -110,10 +113,13 @@ void setup()
 
   logic_control.Load_Saved_Settings_Fans();    //  Load the existing settings for the fans only
   logic_control.load_saved_display_settings(); //load the existing settings for the display only
+  logic_control.load_saved_temperature_settings();
+  logic_control.load_saved_heaters_settings();
 } // end void setup
 
 void loop()
 {
+  
   time_in_millis = millis(); //needed for void checkTimeForExecution () must stay
   inData = "0";
   nextion_commands.receive_data_from_display();
@@ -127,7 +133,11 @@ void loop()
   heaters_control.heaters_manual_control();
   display_control.working_stream();
   logic_control.working_stream();
-
+  temperatures_control.working_stream(); 
+  settings_control.working_stream();
+  overview_control.working_stream();
+  heaters_control.working_stream();
+  temperature_settings_control.working_stream();
   if (inData == "info")
   {
     Serial.println("Heater1 state is: " + String(heater1_on_off_state));
@@ -136,4 +146,6 @@ void loop()
   }
 
   //Serial.println(outData);
+  //Serial.println(on_page_15);
+
 } // end void loop
