@@ -10,5 +10,8 @@
         "thsp",
         "thup"
     ],
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "editor.suggest.showStatusBar": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
 }

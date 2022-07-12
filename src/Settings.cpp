@@ -5,22 +5,22 @@
 
 void Settings::working_stream()
 {
-    settings_control.show_info_text();
-    settings_control.hide_info_text();
-    settings_control.toggle_button_set_h1_power();
-    settings_control.toggle_button_set_h2_power();
-    settings_control.toggle_button_set_h3_power();
+   // settings_control.show_info_text();
+  //  settings_control.hide_info_text();
+  //  settings_control.toggle_button_set_h1_power();
+  //  settings_control.toggle_button_set_h2_power();
+   // settings_control.toggle_button_set_h3_power();
 }
 
-void Settings::show_info_text()
+/*void Settings::show_info_text()
 {
     if (inData == p14_t7_info_button)
     {
         nextion_commands.set_visibility_on_Nextion(p14_t0, 1);
         nextion_commands.set_visibility_on_Nextion("b2", 1);
     }
-}
-void Settings::hide_info_text()
+}*/
+/*void Settings::hide_info_text()
 {
     if (inData == p14_b2)
     {
@@ -28,8 +28,8 @@ void Settings::hide_info_text()
         nextion_commands.set_visibility_on_Nextion(p14_t0, 0);
         display_control.refresh_heaters_settings_screen();
     }
-}
-bool Settings::toggle_button_set_h1_power()
+}*/
+/*bool Settings::toggle_button_set_h1_power()
 {
     if (inData == p14_c0_on)
     {
@@ -44,8 +44,8 @@ bool Settings::toggle_button_set_h1_power()
         Serial.println("Heater 1 is unavailable");
     }
     return h1_available;
-}
-bool Settings::toggle_button_set_h2_power()
+}*/
+/*bool Settings::toggle_button_set_h2_power()
 {
     if (inData == p14_c1_on)
     {
@@ -60,8 +60,8 @@ bool Settings::toggle_button_set_h2_power()
         Serial.println("Heater 2 is unavailable");
     }
     return h2_available;
-}
-bool Settings::toggle_button_set_h3_power()
+}*/
+/*bool Settings::toggle_button_set_h3_power()
 {
     if (inData == p14_c2_on)
     {
@@ -76,8 +76,8 @@ bool Settings::toggle_button_set_h3_power()
         Serial.println("Heater 3 is unavailable");
     }
     return h3_available;
-}
-void Settings::increase_decrease_heater_1_power()
+}*/
+/*void Settings::increase_decrease_heater_1_power()
 {
     if (h1_available)
     {
@@ -118,6 +118,6 @@ void Settings::increase_decrease_heater_3_power()
             h3_power = h3_power - 0.1;
         }
     }
-}
+}*/
 
 Settings settings_control;

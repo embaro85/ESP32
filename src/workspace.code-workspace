@@ -1,17 +1,18 @@
 {
 	"folders": [
 		{
-			"name": "AHU_controller_V0.1",
-			"path": ".."
+			"path": "..\\..\\Solar_tracker_concept_V1.01"
 		},
 		{
-			"name": "test",
-			"path": "..\\..\\test"
+			"name": "Solar_Tracker_v2.01",
+			"path": "..\\..\\Solar_Tracker_v2.01"
 		}
 	],
 	"settings": {
 		"cSpell.words": [
-			"bhmanual"
+			"bhmanual",
+			"endstop",
+			"millis"
 		],
 		"files.associations": {
 			"array": "cpp",
@@ -20,7 +21,11 @@
 			"unordered_map": "cpp",
 			"unordered_set": "cpp",
 			"vector": "cpp",
-			"initializer_list": "cpp"
+			"initializer_list": "cpp",
+			"algorithm": "cpp",
+			"*.tcc": "cpp",
+			"fstream": "cpp",
+			"iostream": "cpp"
 		}
 	}
 }
